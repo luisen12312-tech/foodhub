@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GourmetRoots | Productos</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f4f4f4;
+        }
+
+        /*======================
+            BARRA DE NAVEGACIÓN
+        =======================*/
+        .navbar {
+            width: 100%;
+            background: #ff5722;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 8%;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
+            box-sizing: border-box;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: white;
+        }
+
+        .menu {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: .3s;
+        }
+
+        .menu a:hover {
+            color: #ffe082;
+        }
+
+        /*======================
+              CONTENEDOR
+        =======================*/
+        .contenedor {
+            width: 90%;
+            max-width: 1300px;
+            margin: 35px auto;
+        }
+
+        /*======================
+         BOTÓN NUEVO PRODUCTO
+        =======================*/
+        .boton {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            padding: 13px 22px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-weight: bold;
+            transition: .3s;
+        }
+
+        .boton:hover {
+            background: #218838;
+        }
+
+        /*======================
+              GRID
+        =======================*/
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        /*======================
+              CARD
+        =======================*/
+        .card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, .15);
+            transition: .3s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        /*======================
+              CONTENIDO
+        =======================*/
+        .card-body {
+            padding: 18px;
+        }
+
+        .card-body h2 {
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .restaurante {
+            color: #666;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+
+        .descripcion {
+            color: #555;
+            text-align: justify;
+            margin-bottom: 18px;
+            min-height: 70px;
+            line-height: 1.5;
+        }
+
+        .precio {
+            font-size: 24px;
+            color: #28a745;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /*======================
+              BOTONES
+        =======================*/
+        .botones {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .editar {
+            background: #0d6efd;
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            transition: .3s;
+        }
+
+        .editar:hover {
+            background: #0b5ed7;
+        }
+
+        .eliminar {
+            background: #dc3545;
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            transition: .3s;
+        }
+
+        .eliminar:hover {
+            background: #bb2d3b;
+        }
+
+        /*======================
+         MODAL / VENTANA PROFESIONAL
+        =======================*/
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 90%;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-box .icono-exito {
+            font-size: 50px;
+            color: #28a745;
+            margin-bottom: 15px;
+        }
+
+        .modal-box h3 {
+            margin: 0 0 10px 0;
+            color: #222;
+            font-size: 22px;
+        }
+
+        .modal-box p {
+            margin: 0 0 20px 0;
+            color: #666;
+            font-size: 16px;
+        }
+
+        .btn-modal {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-modal:hover {
+            background: #218838;
+        }
+
+        /*======================
+              RESPONSIVE
+        =======================*/
+        @media(max-width:768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .botones {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .editar,
+            .eliminar {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="logo">
+         🌱 Gourmet<span>Roots</span>
+    </div>
+    <div class="menu">
+        <th:block th:if="${session.usuario != null and session.usuario.rol.nombre == 'ADMIN'}">
+            <a href="/panel">Panel</a>
+            <a href="/mis-pedidos">Mis pedidos</a> <a href="/carrito">🛒 Mi carrito</a>
+            <a href="/logout">Cerrar sesión</a>
+        </th:block>
+        
+        <th:block th:if="${session.usuario != null and session.usuario.rol.nombre != 'ADMIN'}">
+            <a href="/mis-pedidos">Mis pedidos</a> <a href="/carrito">🛒 Mi carrito</a>
+            <a href="/logout">Cerrar sesión</a>
+        </th:block>
+    </div>
+</nav>
+
+    <div class="contenedor">
+
+        <a href="/productos/nuevo" class="boton">
+            ➕ Nuevo Producto
+        </a>
+
+        <div class="grid">
+
+            <div class="card" th:each="p : ${productos}">
+
+                <img th:src="${p.imagen}" alt="Producto">
+
+                <div class="card-body">
+
+                    <h2 th:text="${p.nombre}"></h2>
+
+                    <p class="restaurante">
+                        🍴 Restaurante:
+                        <strong th:text="${p.restaurante.nombre}"></strong>
+                    </p>
+
+                    <p class="descripcion" th:text="${p.descripcion}"></p>
+
+                    <div class="precio" th:text="'$' + ${#numbers.formatDecimal(p.precio,1,2)}"></div>
+
+                    <div class="botones">
+                        <a class="editar" th:href="@{/productos/editar/{id}(id=${p.id})}">
+                            ✏ Editar
+                        </a>
+                        <a class="eliminar" th:href="@{/productos/eliminar/{id}(id=${p.id})}">
+                            🗑 Eliminar
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal-overlay" id="customModal">
+        <div class="modal-box">
+            <div class="icono-exito">✔</div>
+            <h3>¡Acción Exitosa!</h3>
+            <p>Gracias por el comentario cliente</p>
+            <button class="btn-modal" onclick="redirigir()">Entendido</button>
+        </div>
+    </div>
+
+    <script>
+        function mostrarModal() {
+            document.getElementById('customModal').classList.add('active');
+        }
+
+        function redirigir() {
+            window.location.href = "/";
+        }
+    </script>
+
+</body>
+</html>

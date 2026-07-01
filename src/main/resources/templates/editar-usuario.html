@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Editar Usuario</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f4f4f4;
+}
+
+.header{
+
+background:#ff5722;
+color:white;
+padding:20px;
+text-align:center;
+
+}
+
+.formulario{
+
+width:600px;
+max-width:90%;
+margin:40px auto;
+background:white;
+padding:30px;
+border-radius:15px;
+box-shadow:0 4px 15px rgba(0,0,0,.15);
+
+}
+
+h2{
+
+text-align:center;
+margin-bottom:25px;
+
+}
+
+label{
+
+display:block;
+margin-top:15px;
+font-weight:bold;
+
+}
+
+input,
+select{
+
+width:100%;
+padding:12px;
+margin-top:8px;
+border:1px solid #ccc;
+border-radius:8px;
+
+}
+
+.botones{
+
+display:flex;
+justify-content:space-between;
+margin-top:30px;
+
+}
+
+.actualizar{
+
+background:#0d6efd;
+color:white;
+border:none;
+padding:12px 20px;
+border-radius:8px;
+cursor:pointer;
+font-size:15px;
+
+}
+
+.actualizar:hover{
+
+background:#0b5ed7;
+
+}
+
+.cancelar{
+
+background:#6c757d;
+color:white;
+text-decoration:none;
+padding:12px 20px;
+border-radius:8px;
+
+}
+
+.cancelar:hover{
+
+background:#5a6268;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<h1>👤 GourmetRoots</h1>
+
+<p>Editar Usuario</p>
+
+</div>
+
+<div class="formulario">
+
+<h2>Editar Usuario</h2>
+
+<form
+action="/usuarios/actualizar"
+method="post">
+
+<input
+type="hidden"
+name="id"
+th:value="${usuario.id}">
+
+<label>Nombre</label>
+
+<input
+type="text"
+name="nombre"
+th:value="${usuario.nombre}"
+required>
+
+<label>Correo</label>
+
+<input
+type="email"
+name="correo"
+th:value="${usuario.correo}"
+required>
+
+<label>Rol</label>
+
+<select
+name="rolId">
+
+<option
+
+th:each="r : ${roles}"
+
+th:value="${r.id}"
+
+th:text="${r.nombre}"
+
+th:selected="${usuario.rol.id==r.id}">
+
+</option>
+
+</select>
+
+<div class="botones">
+
+<button
+type="submit"
+class="actualizar">
+
+Actualizar
+
+</button>
+
+<a
+href="/usuarios"
+class="cancelar">
+
+Cancelar
+
+</a>
+
+</div>
+
+</form>
+
+</div>
+
+</body>
+
+</html>

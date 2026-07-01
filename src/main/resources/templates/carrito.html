@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mi Carrito | GourmetRoots</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/responsive.css}">
+
+    <style>
+        /*======================
+            BARRA DE NAVEGACIÓN
+        =======================*/
+        .navbar {
+            width: 100%;
+            background: #ff5722;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 8%;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: white;
+        }
+
+        .menu {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: .3s;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .menu a:hover {
+            color: #ffe082;
+        }
+
+        /*======================
+          MEJORA BOTÓN VACIAR CARRITO
+        =======================*/
+        .vaciar {
+            display: block;
+            text-align: center;
+            background: #dc3545;
+            color: white !important;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(220, 53, 69, 0.15);
+        }
+
+        .vaciar:hover {
+            background: #bd2130;
+            transform: translateY(-2px);
+        }
+
+        .vaciar:active {
+            transform: translateY(0);
+        }
+
+        @media(max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+   <nav class="navbar">
+    <div class="logo">
+        🌱 Gourmet<span>Roots</span>
+    </div>
+    <div class="menu">
+        <th:block th:if="${session.usuario != null and session.usuario.rol.nombre == 'ADMIN'}">
+            <a href="/panel">Panel</a>
+            <a href="/mis-pedidos">Mis pedidos</a> <a href="/carrito">🛒 Mi carrito</a>
+            <a href="/logout">Cerrar sesión</a>
+            <a href="/restaurantes">Restaurantes</a>
+        </th:block>
+        
+        <th:block th:if="${session.usuario != null and session.usuario.rol.nombre != 'ADMIN'}">
+            <a href="/mis-pedidos">Mis pedidos</a> <a href="/carrito">🛒 Mi carrito</a>
+            <a href="/logout">Cerrar sesión</a>
+        </th:block>
+    </div>
+</nav>
+
+    <div class="contenedor">
+
+        <div class="contenido">
+
+            <div class="lista">
+
+                <div class="item" th:each="item : ${items}">
+
+                    <img th:src="${item.producto.imagen}" alt="Producto">
+
+                    <div class="info">
+
+                        <h2 th:text="${item.producto.nombre}"></h2>
+
+                        <p>
+                            <strong>Restaurante:</strong>
+                            <span th:text="${item.producto.restaurante.nombre}"></span>
+                        </p>
+
+                        <p th:text="${item.producto.descripcion}"></p>
+
+                        <div class="cantidad">
+                            <a class="menos" th:href="@{/carrito/disminuir/{id}(id=${item.id})}">-</a>
+                            <strong style="font-size:22px;" th:text="${item.cantidad}"></strong>
+                            <a class="mas" th:href="@{/carrito/aumentar/{id}(id=${item.id})}">+</a>
+                        </div>
+
+                        <p>
+                            <strong>Precio Unitario:</strong>
+                            <span th:text="'$ '+${#numbers.formatDecimal(item.producto.precio,1,2)}"></span>
+                        </p>
+
+                        <p>
+                            <strong>Subtotal:</strong>
+                            <span th:text="'$ '+${#numbers.formatDecimal(item.producto.precio * item.cantidad,1,2)}"></span>
+                        </p>
+
+                        <a class="eliminar" th:href="@{/carrito/eliminar/{id}(id=${item.id})}">
+                            🗑 Eliminar
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="resumen">
+
+                <h2>📋 Resumen del Pedido</h2>
+
+                <hr>
+
+                <p>
+                    Productos:
+                    <strong th:text="${totalProductos}"></strong>
+                </p>
+
+                <div class="total">
+                    <span th:text="'$ '+${#numbers.formatDecimal(total,1,2)}"></span>
+                </div>
+
+                <a href="/explorar" class="boton">
+                    🍽 Seguir Comprando
+                </a>
+
+                <a th:href="@{/carrito/vaciar}" class="vaciar">
+                    🗑 Vaciar carrito
+                </a>
+
+                <a th:href="@{/carrito/confirmar}" class="boton comprar">
+                    ✅ Confirmar Pedido
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

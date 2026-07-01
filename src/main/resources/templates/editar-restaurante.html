@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Restaurante - GourmetRoots</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            background:linear-gradient(135deg,#ff6b35,#ff914d);
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .contenedor{
+            background:white;
+            width:500px;
+            padding:35px;
+            border-radius:20px;
+            box-shadow:0 10px 25px rgba(0,0,0,.2);
+        }
+
+        h1{
+            text-align:center;
+            color:#ff6b35;
+            margin-bottom:25px;
+        }
+
+        label{
+            display:block;
+            margin-bottom:5px;
+            font-weight:bold;
+            color:#444;
+        }
+
+        input, textarea{
+            width:100%;
+            padding:12px;
+            border:1px solid #ddd;
+            border-radius:10px;
+            margin-bottom:18px;
+            font-size:15px;
+        }
+
+        textarea{
+            min-height:120px;
+            resize:vertical;
+        }
+
+        input:focus,
+        textarea:focus{
+            outline:none;
+            border-color:#ff6b35;
+            box-shadow:0 0 8px rgba(255,107,53,.3);
+        }
+
+        button{
+            width:100%;
+            background:#ff6b35;
+            color:white;
+            border:none;
+            padding:14px;
+            border-radius:10px;
+            font-size:16px;
+            cursor:pointer;
+            transition:.3s;
+        }
+
+        button:hover{
+            background:#e85a26;
+        }
+
+        .volver{
+            display:block;
+            text-align:center;
+            margin-top:15px;
+            text-decoration:none;
+            color:#555;
+            font-weight:bold;
+        }
+
+        .volver:hover{
+            color:#ff6b35;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="contenedor">
+
+    <h1>Editar Restaurante</h1>
+
+    <form action="/restaurantes/actualizar" method="post">
+
+        <input type="hidden"
+               name="id"
+               th:value="${restaurante.id}">
+
+        <label>Nombre</label>
+        <input type="text"
+               name="nombre"
+               th:value="${restaurante.nombre}"
+               required>
+
+        <label>Dirección</label>
+        <input type="text"
+               name="direccion"
+               th:value="${restaurante.direccion}"
+               required>
+
+        <label>Teléfono</label>
+        <input type="text"
+               name="telefono"
+               th:value="${restaurante.telefono}"
+               required>
+
+        <label>Descripción</label>
+        <textarea name="descripcion"
+                  required
+                  th:text="${restaurante.descripcion}">
+        </textarea>
+
+        <button type="submit">
+            Actualizar Restaurante
+        </button>
+
+    </form>
+
+    <a href="/restaurantes" class="volver">
+        ← Volver al listado
+    </a>
+
+</div>
+
+</body>
+</html>

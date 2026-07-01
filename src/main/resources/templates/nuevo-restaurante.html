@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuevo Restaurante - FoodHub</title>
+
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#ff6b35,#ff914d);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.formulario{
+    background:white;
+    width:100%;
+    max-width:550px;
+    padding:35px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+}
+
+.formulario h2{
+    text-align:center;
+    color:#ff6b35;
+    margin-bottom:25px;
+}
+
+label{
+    display:block;
+    margin-bottom:5px;
+    font-weight:bold;
+    color:#444;
+}
+
+input,
+textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    margin-bottom:18px;
+    font-size:15px;
+}
+
+textarea{
+    min-height:120px;
+    resize:vertical;
+}
+
+input:focus,
+textarea:focus{
+    outline:none;
+    border-color:#ff6b35;
+    box-shadow:0 0 8px rgba(255,107,53,.3);
+}
+
+button{
+    width:100%;
+    background:#ff6b35;
+    color:white;
+    border:none;
+    padding:14px;
+    border-radius:10px;
+    font-size:16px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:#e85a26;
+}
+
+.volver{
+    display:block;
+    text-align:center;
+    margin-top:15px;
+    text-decoration:none;
+    color:#555;
+    font-weight:bold;
+}
+
+.volver:hover{
+    color:#ff6b35;
+}
+
+@media(max-width:600px){
+
+    .formulario{
+        padding:25px;
+    }
+
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="formulario">
+
+    <h2>🍔 Nuevo Restaurante</h2>
+
+    <form action="/restaurantes/guardar" method="post">
+
+        <label>Nombre del Restaurante</label>
+        <input type="text"
+               name="nombre"
+               placeholder="Ej. Burger King"
+               required>
+
+        <label>Dirección</label>
+        <input type="text"
+               name="direccion"
+               placeholder="Ej. Av. Central #123"
+               required>
+
+        <label>Teléfono</label>
+        <input type="text"
+               name="telefono"
+               placeholder="Ej. 9991234567"
+               required>
+
+        <label>Descripción</label>
+
+<textarea
+name="descripcion"
+placeholder="Describe el restaurante..."
+required></textarea>
+
+<label>URL de la Imagen</label>
+
+<input
+type="text"
+name="imagen"
+placeholder="https://..."
+required>
+
+<button type="submit">
+
+Guardar Restaurante
+
+</button>
+
+    </form>
+
+    <a href="/restaurantes" class="volver">
+        ← Volver al listado
+    </a>
+
+</div>
+
+</body>
+</html>

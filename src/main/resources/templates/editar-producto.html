@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Editar Producto</title>
+
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f4f4f4;
+}
+
+.header{
+
+background:#ff5722;
+color:white;
+padding:20px;
+text-align:center;
+
+}
+
+.formulario{
+
+width:600px;
+max-width:90%;
+margin:40px auto;
+background:white;
+padding:30px;
+border-radius:15px;
+box-shadow:0 4px 15px rgba(0,0,0,.15);
+
+}
+
+h2{
+
+margin-bottom:25px;
+text-align:center;
+color:#333;
+
+}
+
+label{
+
+font-weight:bold;
+display:block;
+margin-top:15px;
+
+}
+
+input,
+textarea,
+select{
+
+width:100%;
+padding:12px;
+margin-top:8px;
+border:1px solid #ccc;
+border-radius:8px;
+font-size:15px;
+
+}
+
+textarea{
+
+resize:vertical;
+height:120px;
+
+}
+
+.botones{
+
+display:flex;
+justify-content:space-between;
+margin-top:30px;
+
+}
+
+.actualizar{
+
+background:#0d6efd;
+color:white;
+padding:12px 22px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-size:15px;
+transition:.3s;
+
+}
+
+.actualizar:hover{
+
+background:#0b5ed7;
+
+}
+
+.cancelar{
+
+background:#6c757d;
+color:white;
+padding:12px 22px;
+text-decoration:none;
+border-radius:8px;
+transition:.3s;
+
+}
+
+.cancelar:hover{
+
+background:#5a6268;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<h1>🌱 GourmetRoots</h1>
+
+<p>Editar Producto</p>
+
+</div>
+
+<div class="formulario">
+
+<h2>Modificar Producto</h2>
+
+<form
+action="/productos/actualizar"
+method="post">
+
+<input
+type="hidden"
+name="id"
+th:value="${producto.id}">
+
+<label>Nombre</label>
+
+<input
+type="text"
+name="nombre"
+th:value="${producto.nombre}"
+required>
+
+<label>Descripción</label>
+
+<textarea
+name="descripcion"
+required
+th:text="${producto.descripcion}">
+</textarea>
+
+<label>Precio</label>
+
+<input
+type="number"
+step="0.01"
+name="precio"
+th:value="${producto.precio}"
+required>
+
+<label>Imagen (URL)</label>
+
+<input
+type="text"
+name="imagen"
+th:value="${producto.imagen}"
+required>
+
+<label>Restaurante</label>
+
+<select
+name="restauranteId"
+required>
+
+<option
+th:each="r : ${restaurantes}"
+th:value="${r.id}"
+th:text="${r.nombre}"
+th:selected="${producto.restaurante.id == r.id}">
+</option>
+
+</select>
+
+<div class="botones">
+
+<button
+type="submit"
+class="actualizar">
+
+Actualizar Producto
+
+</button>
+
+<a
+href="/productos"
+class="cancelar">
+
+Cancelar
+
+</a>
+
+</div>
+
+</form>
+
+</div>
+
+</body>
+</html>

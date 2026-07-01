@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GourmetRoots | Contacto</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/responsive.css}">
+
+    <style>
+        body {
+            background: #f5f5f5;
+            margin: 0;
+            font-family: sans-serif;
+            color: #333;
+        }
+
+        /*================ NAVBAR ================*/
+        .navbar {
+            width: 100%;
+            background: #ff5722;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 8%;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
+            box-sizing: border-box;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: white;
+        }
+
+        .menu {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: .3s;
+        }
+
+        .menu a:hover {
+            color: #ffe082;
+        }
+
+        /*================ CONTENIDO CONTACTO =================*/
+        .container {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .seccion-contacto {
+            background: white;
+            padding: 40px;
+            border-radius: 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .titulo-seccion {
+            font-size: 32px;
+            color: #ff5722;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #ff5722;
+            padding-bottom: 10px;
+            display: inline-block;
+            margin-top: 0;
+        }
+
+        .contacto-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 40px;
+        }
+
+        .info-contacto {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .info-item .icono {
+            font-size: 28px;
+            background: #ffe0d1;
+            padding: 10px;
+            border-radius: 12px;
+            line-height: 1;
+        }
+
+        .info-item h4 {
+            margin: 0 0 5px 0;
+            font-size: 18px;
+            color: #222;
+        }
+
+        .info-item p {
+            margin: 0;
+            color: #666;
+            font-size: 15px;
+        }
+
+        /* Formulario Estético */
+        .formulario-contacto {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-grupo {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-grupo label {
+            font-weight: bold;
+            font-size: 14px;
+            color: #444;
+        }
+
+        .form-grupo input, .form-grupo textarea {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            transition: .3s;
+        }
+
+        .form-grupo input:focus, .form-grupo textarea:focus {
+            border-color: #ff5722;
+            box-shadow: 0 0 0 3px rgba(255, 87, 34, 0.1);
+        }
+
+        .btn-enviar {
+            background: #ff5722;
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: .3s;
+            text-align: center;
+        }
+
+        .btn-enviar:hover {
+            background: #e64a19;
+        }
+
+        /*================ MODAL / VENTANA PROFESIONAL =================*/
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 90%;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-box .icono-exito {
+            font-size: 50px;
+            color: #28a745;
+            margin-bottom: 15px;
+        }
+
+        .modal-box h3 {
+            margin: 0 0 10px 0;
+            color: #222;
+            font-size: 22px;
+        }
+
+        .modal-box p {
+            margin: 0 0 20px 0;
+            color: #666;
+            font-size: 16px;
+        }
+
+        .btn-modal {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-modal:hover {
+            background: #218838;
+        }
+
+        /*================ FOOTER =================*/
+        footer {
+            background: #222;
+            color: white;
+            padding: 60px 8%;
+            margin-top: 80px;
+        }
+
+        .footer {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 35px;
+        }
+
+        footer h3 {
+            margin-bottom: 18px;
+        }
+
+        footer a {
+            display: block;
+            color: #ddd;
+            text-decoration: none;
+            margin: 10px 0;
+        }
+
+        footer a:hover {
+            color: #ff5722;
+        }
+
+        .copy {
+            text-align: center;
+            margin-top: 40px;
+            border-top: 1px solid #444;
+            padding-top: 20px;
+            color: #bbb;
+        }
+
+        @media(max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .contacto-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            🌱 Gourmet<span>Roots</span>
+        </div>
+        <div class="menu">
+            <a href="/">Inicio</a>
+            
+            <th:block th:if="${usuario != null}">
+               
+                <a href="/carrito">🛒 Mi carrito</a>
+                <a href="/logout">Cerrar sesión</a>
+            </th:block>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="seccion-contacto">
+            <h2 class="titulo-seccion">📞 Contáctanos</h2>
+            <div class="contacto-grid">
+                
+                <div class="info-contacto">
+                    <div class="info-item">
+                        <div class="icono">📍</div>
+                        <div>
+                            <h4>Nuestra Ubicación</h4>
+                            <p>Av. Principal Gastronómica #123, Ciudad de México</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="icono">✉️</div>
+                        <div>
+                            <h4>Correo Electrónico</h4>
+                            <p>soporte@foodhub.com<br>info@foodhub.com</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="icono">📞</div>
+                        <div>
+                            <h4>Teléfono de Soporte</h4>
+                            <p>+52 (55) 1234-5678<br>Atención las 24 hrs</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formulario-contacto">
+                    <div class="form-grupo">
+                        <label for="nombre">Nombre Completo</label>
+                        <input type="text" id="nombre" placeholder="Escribe tu nombre...">
+                    </div>
+                    <div class="form-grupo">
+                        <label for="correo">Correo Electrónico</label>
+                        <input type="email" id="correo" placeholder="ejemplo@correo.com">
+                    </div>
+                    <div class="form-grupo">
+                        <label for="mensaje">Mensaje o Sugerencia</label>
+                        <textarea id="mensaje" rows="4" placeholder="¿En qué podemos ayudarte?"></textarea>
+                    </div>
+                    <button class="btn-enviar" type="button" onclick="mostrarModal()">Enviar Mensaje</button>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <div class="modal-overlay" id="customModal">
+        <div class="modal-box">
+            <div class="icono-exito">✔</div>
+            <h3>¡Mensaje Enviado!</h3>
+            <p>Gracias por el comentario cliente</p>
+            <button class="btn-modal" onclick="redirigir()">Entendido</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer">
+            <div>
+                <h3>GourmetRoots</h3>
+                <p>La mejor plataforma para descubrir restaurantes y ordenar comida.</p>
+            </div>
+            <div>
+                <h3>Enlaces</h3>
+                <a href="/">Inicio</a>
+            </div>
+            <div>
+                <h3>Cuenta</h3>
+                <th:block th:if="${usuario != null}">
+                    <a href="/carrito">Mi carrito</a>
+                </th:block>
+            </div>
+        </div>
+        <div class="copy">
+            © 2026 GourmetRoots | Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <script>
+        function mostrarModal() {
+            // Muestra la ventana modal elegante en pantalla
+            document.getElementById('customModal').classList.add('active');
+        }
+
+        function redirigir() {
+            // Te lleva a la página de inicio cuando presionas el botón
+            window.location.href = "/";
+        }
+    </script>
+
+</body>
+</html>
