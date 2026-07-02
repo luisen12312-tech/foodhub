@@ -7,15 +7,41 @@
     <title>GourmetRoots | Productos</title>
 
     <style>
+        :root {
+            --verde-oscuro: #1b2f27;
+            --naranja: #ff5722;
+            --naranja-suave: #ffe082;
+            --crema: #f7efe4;
+            --texto-oscuro: #24211c;
+            --texto-gris: #6b675f;
+            --exito: #2fa84f;
+            --exito-hover: #268a41;
+            --azul: #2f6fed;
+            --azul-hover: #2559c4;
+            --rojo: #e0453f;
+            --rojo-hover: #c73832;
+            --borde: #ece3d3;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: Georgia, 'Times New Roman', serif;
         }
 
         body {
-            background: #f4f4f4;
+            background: var(--crema);
+            color: var(--texto-oscuro);
+        }
+
+        /* Elementos de texto general en fuente de lectura, los títulos usan serif */
+        p, a, button, span, div {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+
+        h1, h2, h3, .logo {
+            font-family: Georgia, 'Times New Roman', serif;
         }
 
         /*======================
@@ -23,43 +49,68 @@
         =======================*/
         .navbar {
             width: 100%;
-            background: #ff5722;
+            background: var(--verde-oscuro);
             color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 18px 8%;
+            padding: 22px 6%;
             position: sticky;
             top: 0;
             z-index: 999;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, .18);
             box-sizing: border-box;
+            border-bottom: 3px solid var(--naranja);
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .logo-bloque {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
 
         .logo {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: bold;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .logo span {
-            color: white;
+            color: var(--naranja-suave);
+        }
+
+        .eslogan {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--naranja-suave);
+            font-weight: 600;
         }
 
         .menu {
             display: flex;
-            gap: 25px;
+            gap: 28px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .menu a {
             text-decoration: none;
-            color: white;
-            font-weight: bold;
-            transition: .3s;
+            color: #f2efe9;
+            font-weight: 600;
+            font-size: 15px;
+            transition: .25s;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         }
 
         .menu a:hover {
-            color: #ffe082;
+            color: var(--naranja-suave);
         }
 
         /*======================
@@ -68,26 +119,53 @@
         .contenedor {
             width: 90%;
             max-width: 1300px;
-            margin: 35px auto;
+            margin: 40px auto;
         }
 
         /*======================
          BOTÓN NUEVO PRODUCTO
         =======================*/
         .boton {
-            display: inline-block;
-            background: #28a745;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--naranja);
             color: white;
             text-decoration: none;
-            padding: 13px 22px;
-            border-radius: 8px;
-            margin-bottom: 25px;
+            padding: 14px 26px;
+            border-radius: 50px;
+            margin-bottom: 30px;
             font-weight: bold;
-            transition: .3s;
+            font-size: 15px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            transition: .25s;
+            box-shadow: 0 6px 16px rgba(255, 87, 34, .35);
         }
 
         .boton:hover {
-            background: #218838;
+            background: #e64a19;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 87, 34, .45);
+        }
+
+        .encabezado-seccion {
+            margin-bottom: 22px;
+        }
+
+        .encabezado-seccion .etiqueta {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--naranja);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .encabezado-seccion h1 {
+            font-size: 32px;
+            color: var(--verde-oscuro);
         }
 
         /*======================
@@ -95,8 +173,8 @@
         =======================*/
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 26px;
         }
 
         /*======================
@@ -104,53 +182,70 @@
         =======================*/
         .card {
             background: white;
-            border-radius: 16px;
+            border-radius: 18px;
             overflow: hidden;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, .15);
+            box-shadow: 0 4px 18px rgba(27, 47, 39, .1);
+            border: 1px solid var(--borde);
             transition: .3s;
+            display: flex;
+            flex-direction: column;
         }
 
         .card:hover {
             transform: translateY(-6px);
+            box-shadow: 0 12px 28px rgba(27, 47, 39, .16);
         }
 
         .card img {
             width: 100%;
-            height: 220px;
+            height: 210px;
             object-fit: cover;
+            display: block;
         }
 
         /*======================
               CONTENIDO
         =======================*/
         .card-body {
-            padding: 18px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         }
 
         .card-body h2 {
-            color: #333;
-            margin-bottom: 12px;
+            color: var(--verde-oscuro);
+            margin-bottom: 10px;
+            font-size: 22px;
         }
 
         .restaurante {
-            color: #666;
+            color: var(--texto-gris);
             margin-bottom: 12px;
-            font-size: 15px;
+            font-size: 14px;
+        }
+
+        .restaurante strong {
+            color: var(--texto-oscuro);
         }
 
         .descripcion {
             color: #555;
-            text-align: justify;
-            margin-bottom: 18px;
-            min-height: 70px;
-            line-height: 1.5;
+            text-align: left;
+            margin-bottom: 16px;
+            min-height: 60px;
+            line-height: 1.55;
+            font-size: 14.5px;
+            flex: 1;
         }
 
         .precio {
             font-size: 24px;
-            color: #28a745;
+            color: var(--exito);
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
+            font-family: Georgia, 'Times New Roman', serif;
         }
 
         /*======================
@@ -159,32 +254,39 @@
         .botones {
             display: flex;
             justify-content: space-between;
+            gap: 10px;
+        }
+
+        .editar,
+        .eliminar {
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+            padding: 11px 16px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: .25s;
         }
 
         .editar {
-            background: #0d6efd;
-            color: white;
-            text-decoration: none;
-            padding: 10px 18px;
-            border-radius: 8px;
-            transition: .3s;
+            background: rgba(47, 111, 237, .1);
+            color: var(--azul);
         }
 
         .editar:hover {
-            background: #0b5ed7;
+            background: var(--azul);
+            color: white;
         }
 
         .eliminar {
-            background: #dc3545;
-            color: white;
-            text-decoration: none;
-            padding: 10px 18px;
-            border-radius: 8px;
-            transition: .3s;
+            background: rgba(224, 69, 63, .1);
+            color: var(--rojo);
         }
 
         .eliminar:hover {
-            background: #bb2d3b;
+            background: var(--rojo);
+            color: white;
         }
 
         /*======================
@@ -196,7 +298,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(27, 47, 39, 0.55);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -213,14 +315,15 @@
 
         .modal-box {
             background: white;
-            padding: 30px;
-            border-radius: 16px;
+            padding: 34px 30px;
+            border-radius: 18px;
             text-align: center;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
             max-width: 400px;
             width: 90%;
             transform: scale(0.8);
             transition: transform 0.3s ease;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         }
 
         .modal-overlay.active .modal-box {
@@ -229,7 +332,7 @@
 
         .modal-box .icono-exito {
             font-size: 50px;
-            color: #28a745;
+            color: var(--exito);
             margin-bottom: 15px;
         }
 
@@ -240,25 +343,26 @@
         }
 
         .modal-box p {
-            margin: 0 0 20px 0;
+            margin: 0 0 22px 0;
             color: #666;
-            font-size: 16px;
+            font-size: 15px;
         }
 
         .btn-modal {
-            background: #28a745;
+            background: var(--exito);
             color: white;
             border: none;
-            padding: 12px 25px;
+            padding: 13px 28px;
             font-size: 15px;
             font-weight: bold;
-            border-radius: 8px;
+            border-radius: 50px;
             cursor: pointer;
             transition: 0.2s;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         }
 
         .btn-modal:hover {
-            background: #218838;
+            background: var(--exito-hover);
         }
 
         /*======================
@@ -267,37 +371,107 @@
         @media(max-width:768px) {
             .navbar {
                 flex-direction: column;
-                gap: 20px;
+                align-items: flex-start;
+                gap: 16px;
+                padding: 18px 6%;
             }
 
             .menu {
-                flex-wrap: wrap;
+                width: 100%;
+                justify-content: flex-start;
+                gap: 18px;
+            }
+
+            .contenedor {
+                width: 92%;
+                margin: 28px auto;
+            }
+
+            .encabezado-seccion h1 {
+                font-size: 26px;
+            }
+
+            .boton {
+                width: 100%;
                 justify-content: center;
             }
+        }
 
+        @media(max-width:480px) {
             .botones {
                 flex-direction: column;
-                gap: 10px;
-            }
-
-            .editar,
-            .eliminar {
-                text-align: center;
             }
         }
+
+        
+    .gr-footer {
+        background: #1b2b23;
+        color: white;
+        padding: 60px 8%;
+        margin-top: 80px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .gr-footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 35px;
+        max-width: 1300px;
+        margin: 0 auto;
+    }
+
+    .gr-footer-grid h3 {
+        margin: 0 0 18px 0;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-size: 19px;
+        color: white;
+    }
+
+    .gr-footer-grid p {
+        color: #cfcfc7;
+        font-size: 14.5px;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .gr-footer-grid a {
+        display: block;
+        color: #dcdcd5;
+        text-decoration: none;
+        margin: 10px 0;
+        font-size: 14.5px;
+        transition: .25s;
+    }
+
+    .gr-footer-grid a:hover {
+        color: #e8622c;
+    }
+
+    .gr-footer-copy {
+        text-align: center;
+        margin-top: 40px;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        padding-top: 20px;
+        color: #b7b7ae;
+        font-size: 14px;
+    }
+
     </style>
 </head>
 
 <body>
 
   <nav class="navbar">
-    <div class="logo">
-         🌱 Gourmet<span>Roots</span>
+    <div class="logo-bloque">
+        <div class="logo">
+            🌱 Gourmet<span>Roots</span>
+        </div>
+        <span class="eslogan">Encuentra los mejores restaurantes</span>
     </div>
     <div class="menu">
         <th:block th:if="${session.usuario != null and session.usuario.rol.nombre == 'ADMIN'}">
             <a href="/panel">Panel</a>
-            <a href="/mis-pedidos">Mis pedidos</a> <a href="/carrito">🛒 Mi carrito</a>
+           
             <a href="/logout">Cerrar sesión</a>
         </th:block>
         
@@ -313,6 +487,11 @@
         <a href="/productos/nuevo" class="boton">
             ➕ Nuevo Producto
         </a>
+
+        <div class="encabezado-seccion">
+            <span class="etiqueta">Panel de gestión</span>
+            <h1>Productos registrados</h1>
+        </div>
 
         <div class="grid">
 
@@ -368,6 +547,26 @@
             window.location.href = "/";
         }
     </script>
+
+    <footer class="gr-footer">
+    <div class="gr-footer-grid">
+        <div>
+            <h3>GourmetRoots</h3>
+            <p>La mejor plataforma para descubrir restaurantes y ordenar comida.</p>
+        </div>
+        <div>
+            <h3>Enlaces</h3>
+            <a href="/">Inicio</a>
+            <a href="/restaurantes">Restaurantes</a>
+            <a href="/acerca">Acerca de</a>
+            <a href="/contacto">Contacto</a>
+        </div>
+        
+    </div>
+    <div class="gr-footer-copy">
+        © 2026 GourmetRoots | Todos los derechos reservados.
+    </div>
+</footer>
 
 </body>
 </html>

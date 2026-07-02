@@ -4,115 +4,344 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GourmetRoots - Restaurantes</title>
-    
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
+
+        :root{
+            --cream:#FBF7EF;
+            --cream-alt:#F2ECDE;
+            --ink:#2B2A27;
+            --ink-soft:#6B665D;
+            --brand:#E2542B;
+            --brand-dark:#BE3E1C;
+            --forest:#3F5B41;
+            --forest-light:#E7EEE4;
+            --gold:#C79A45;
+            --white:#FFFFFF;
+            --line:#E7E0D2;
+            --blue:#3D5A80;
+            --blue-light:#E7EDF3;
+            --red:#B23A3A;
+            --red-light:#F5E6E6;
+            --radius-lg:20px;
+            --shadow-soft:0 8px 24px rgba(43,42,39,.08);
+            --shadow-card:0 14px 30px rgba(43,42,39,.12);
+        }
 
         *{
             margin:0;
             padding:0;
             box-sizing:border-box;
-            font-family:Arial, sans-serif;
+            font-family:'Inter', Arial, sans-serif;
         }
+
+        html,body{ max-width:100%; overflow-x:hidden; }
 
         body{
-            background:#f4f4f4;
+            background:var(--cream);
+            color:var(--ink);
         }
 
+        h1,h3{ font-family:'Fraunces', serif; }
+
+        :focus-visible{ outline:2px solid var(--forest); outline-offset:3px; }
+        @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
+
         .header{
-            background:#ff5722;
-            color:white;
-            padding:20px;
-            text-align:center;
+            background:var(--ink);
+            color:var(--white);
+            padding:24px 6%;
+            position:sticky;
+            top:0;
+            z-index:999;
+        }
+
+        .header-inner{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            flex-wrap:wrap;
+            gap:16px;
+            max-width:1200px;
+            margin:auto;
+        }
+
+        .header h1{
+            font-size:24px;
+            font-weight:600;
+            letter-spacing:-.01em;
+        }
+
+        .header p{
+            margin-top:4px;
+            font-size:12.5px;
+            letter-spacing:.14em;
+            text-transform:uppercase;
+            color:var(--gold);
+            font-weight:600;
+        }
+
+        .header-actions{
+            display:flex;
+            gap:22px;
+            align-items:center;
+            flex-wrap:wrap;
+        }
+
+        .header-actions a{
+            color:rgba(255,255,255,.85);
+            text-decoration:none;
+            font-weight:500;
+            font-size:14.5px;
+            transition:color .25s;
+        }
+
+        .header-actions a:hover{
+            color:var(--white);
+        }
+
+        .header-actions a.cta-link{
+            background:var(--brand);
+            color:var(--white);
+            padding:9px 18px;
+            border-radius:30px;
+            font-weight:600;
+        }
+
+        .header-actions a.cta-link:hover{
+            background:var(--brand-dark);
         }
 
         .contenedor{
             width:90%;
             max-width:1200px;
             margin:auto;
-            margin-top:30px;
+            margin-top:36px;
         }
 
         .boton{
-            display:inline-block;
-            background:#28a745;
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            background:var(--brand);
             color:white;
-            padding:12px 20px;
+            padding:13px 24px;
             text-decoration:none;
-            border-radius:8px;
-            margin-bottom:20px;
-            transition:.3s;
+            border-radius:30px;
+            margin-bottom:28px;
+            font-weight:600;
+            font-size:14.5px;
+            box-shadow:0 10px 22px rgba(226,84,43,.3);
+            transition:background .3s, transform .3s;
         }
 
         .boton:hover{
-            background:#218838;
+            background:var(--brand-dark);
+            transform:translateY(-2px);
+        }
+
+        .section-head{
+            margin-bottom:26px;
+        }
+
+        .section-head .eyebrow{
+            font-size:13px;
+            letter-spacing:.16em;
+            text-transform:uppercase;
+            color:var(--brand);
+            font-weight:600;
+        }
+
+        .section-head h2{
+            font-family:'Fraunces', serif;
+            font-size:26px;
+            font-weight:600;
+            color:var(--ink);
+            margin-top:4px;
+        }
+
+        .estado-vacio{
+            background:var(--white);
+            border:1px dashed var(--line);
+            border-radius:var(--radius-lg);
+            padding:60px 30px;
+            text-align:center;
+            color:var(--ink-soft);
+            font-size:15px;
         }
 
         .grid{
             display:grid;
             grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-            gap:20px;
+            gap:26px;
+            padding-bottom:70px;
         }
 
         .card{
             background:white;
-            border-radius:15px;
+            border-radius:var(--radius-lg);
             overflow:hidden;
-            box-shadow:0 2px 10px rgba(0,0,0,.15);
+            box-shadow:var(--shadow-soft);
+            border:1px solid var(--line);
+            transition:transform .3s, box-shadow .3s;
+        }
+
+        .card:hover{
+            transform:translateY(-6px);
+            box-shadow:var(--shadow-card);
         }
 
         .card img{
             width:100%;
-            height:220px;
+            height:200px;
             object-fit:cover;
+            display:block;
+            background:var(--cream-alt);
         }
 
         .card-body{
-            padding:15px;
+            padding:20px;
         }
 
         .card h3{
-            margin-bottom:10px;
+            margin-bottom:8px;
+            font-size:19px;
+            font-weight:600;
+            color:var(--ink);
+        }
+
+        .card-body p{
+            color:var(--ink-soft);
+            font-size:14.5px;
+            line-height:1.6;
         }
 
         .detalle{
             text-decoration:none;
-            color:#333;
+            color:inherit;
+            display:block;
+        }
+
+        .detalle:hover h3{
+            color:var(--brand);
         }
 
         .acciones{
-            margin-top:15px;
+            margin-top:18px;
             display:flex;
             gap:10px;
+            flex-wrap:wrap;
         }
 
         .eliminar{
-            display:inline-block;
-            background:#dc3545;
-            color:white;
-            padding:8px 15px;
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            background:var(--red-light);
+            color:var(--red);
+            padding:9px 16px;
             text-decoration:none;
-            border-radius:6px;
-            transition:.3s;
+            border-radius:8px;
+            font-weight:600;
+            font-size:13.5px;
+            transition:background .3s, color .3s;
         }
 
         .eliminar:hover{
-            background:#bb2d3b;
+            background:var(--red);
+            color:white;
         }
 
         .editar{
-            display:inline-block;
-            background:#0d6efd;
-            color:white;
-            padding:8px 15px;
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            background:var(--blue-light);
+            color:var(--blue);
+            padding:9px 16px;
             text-decoration:none;
-            border-radius:6px;
-            transition:.3s;
+            border-radius:8px;
+            font-weight:600;
+            font-size:13.5px;
+            transition:background .3s, color .3s;
         }
 
         .editar:hover{
-            background:#0b5ed7;
+            background:var(--blue);
+            color:white;
         }
+
+        /*==========================
+            RESPONSIVE
+        ===========================*/
+
+        @media(max-width:768px){
+
+            .header{ padding:20px 5%; }
+            .header-inner{ justify-content:center; text-align:center; }
+            .header-actions{ justify-content:center; }
+
+            .contenedor{ width:92%; }
+            .card img{ height:180px; }
+
+        }
+        
+    .gr-footer {
+        background: #1b2b23;
+        color: white;
+        padding: 60px 8%;
+        margin-top: 80px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .gr-footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 35px;
+        max-width: 1300px;
+        margin: 0 auto;
+    }
+
+    .gr-footer-grid h3 {
+        margin: 0 0 18px 0;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-size: 19px;
+        color: white;
+    }
+
+    .gr-footer-grid p {
+        color: #cfcfc7;
+        font-size: 14.5px;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .gr-footer-grid a {
+        display: block;
+        color: #dcdcd5;
+        text-decoration: none;
+        margin: 10px 0;
+        font-size: 14.5px;
+        transition: .25s;
+    }
+
+    .gr-footer-grid a:hover {
+        color: #e8622c;
+    }
+
+    .gr-footer-copy {
+        text-align: center;
+        margin-top: 40px;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        padding-top: 20px;
+        color: #b7b7ae;
+        font-size: 14px;
+    }
+
 
     </style>
 
@@ -121,13 +350,7 @@
 
 <div class="header">
 
-    <div style="
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    flex-wrap:wrap;
-    max-width:1200px;
-    margin:auto;">
+    <div class="header-inner">
 
         <div>
 
@@ -137,24 +360,17 @@
 
         </div>
 
-        <div style="
-        display:flex;
-        gap:18px;
-        align-items:center;">
-
-           
+        <div class="header-actions">
 
             <th:block th:if="${usuario==null}">
 
-                <a href="/login"
-                   style="color:white;text-decoration:none;font-weight:bold;">
+                <a href="/login">
 
                     Iniciar sesión
 
                 </a>
 
-                <a href="/registro"
-                   style="color:white;text-decoration:none;font-weight:bold;">
+                <a href="/registro" class="cta-link">
 
                     Registrarse
 
@@ -164,25 +380,18 @@
 
             <th:block th:if="${usuario!=null}">
 
-                <a href="/carrito"
-                   style="color:white;text-decoration:none;font-weight:bold;">
+        
 
-                    🛒 Mi carrito
-
-                </a>
-
-                <a href="/panel"
-                      style="color:white;text-decoration:none;font-weight:bold;">
+                <a href="/panel">
                       Panel
                 </a>
 
-                <a href="/logout"
-                   style="color:white;text-decoration:none;font-weight:bold;">
+                <a href="/logout">
 
                     Cerrar sesión
 
                 </a>
-                
+
 
             </th:block>
 
@@ -205,11 +414,17 @@ th:if="${usuario != null and usuario.rol.nombre == 'ADMIN'}">
 
 </th:block>
 
+    <div class="section-head">
+        <span class="eyebrow">Panel de gestión</span>
+        <h2>Restaurantes registrados</h2>
+    </div>
+
     <div class="grid">
 
         <div class="card" th:each="r : ${restaurantes}">
 
-            <img th:src="${r.imagen}" alt="Imagen">
+            <img th:src="${r.imagen}" alt="Imagen"
+                 onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 400 200%27%3E%3Crect width=%27400%27 height=%27200%27 fill=%27%23F2ECDE%27/%3E%3Ctext x=%27200%27 y=%27107%27 font-family=%27sans-serif%27 font-size=%2736%27 text-anchor=%27middle%27 fill=%27%236B665D%27%3E%F0%9F%8D%BD%3C/text%3E%3C/svg%3E'">
 
             <div class="card-body">
 
@@ -240,7 +455,30 @@ th:if="${usuario != null and usuario.rol.nombre == 'ADMIN'}">
 
     </div>
 
+    <div class="estado-vacio" th:if="${restaurantes == null or #lists.isEmpty(restaurantes)}">
+        Aún no hay restaurantes registrados.
+    </div>
+
 </div>
 
+<footer class="gr-footer">
+    <div class="gr-footer-grid">
+        <div>
+            <h3>GourmetRoots</h3>
+            <p>La mejor plataforma para descubrir restaurantes y ordenar comida.</p>
+        </div>
+        <div>
+            <h3>Enlaces</h3>
+            <a href="/">Inicio</a>
+            <a href="/restaurantes">Restaurantes</a>
+            <a href="/acerca">Acerca de</a>
+            <a href="/contacto">Contacto</a>
+        </div>
+        
+    </div>
+    <div class="gr-footer-copy">
+        © 2026 GourmetRoots | Todos los derechos reservados.
+    </div>
+</footer>
 </body>
 </html>

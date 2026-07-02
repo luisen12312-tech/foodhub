@@ -11,20 +11,50 @@ content="width=device-width, initial-scale=1.0">
 
 <title>Explorar Restaurantes | GourmetRoots</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
+
+:root{
+    --cream:#FBF7EF;
+    --cream-alt:#F2ECDE;
+    --ink:#2B2A27;
+    --ink-soft:#6B665D;
+    --brand:#E2542B;
+    --brand-dark:#BE3E1C;
+    --forest:#3F5B41;
+    --forest-light:#E7EEE4;
+    --gold:#C79A45;
+    --white:#FFFFFF;
+    --line:#E7E0D2;
+    --radius-lg:22px;
+    --radius-md:14px;
+    --shadow-soft:0 10px 30px rgba(43,42,39,.07);
+    --shadow-card:0 14px 34px rgba(43,42,39,.10);
+}
 
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial,Helvetica,sans-serif;
+font-family:'Inter', Arial, Helvetica, sans-serif;
 }
+
+html,body{ max-width:100%; overflow-x:hidden; }
 
 body{
 
-background:#f5f5f5;
+background:var(--cream);
+color:var(--ink);
 
 }
+
+h1,h2{ font-family:'Fraunces', serif; }
+
+:focus-visible{ outline:2px solid var(--forest); outline-offset:3px; }
+@media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
 
 /*==========================
         NAVBAR
@@ -32,47 +62,87 @@ background:#f5f5f5;
 
 nav{
 
-background:#ff5722;
-padding:18px 8%;
+background:rgba(251,247,239,.92);
+backdrop-filter:blur(8px);
+padding:16px 6%;
+border-bottom:1px solid var(--line);
 
 display:flex;
 justify-content:space-between;
 align-items:center;
 flex-wrap:wrap;
+position:sticky;
+top:0;
+z-index:999;
 
 }
 
 .logo{
 
-font-size:30px;
-font-weight:bold;
-color:white;
+font-family:'Fraunces', serif;
+font-size:24px;
+font-weight:600;
+color:var(--ink);
 text-decoration:none;
+letter-spacing:-.02em;
 
+}
+
+.menu-toggle{
+display:none;
+background:none;
+border:none;
+color:var(--ink);
+font-size:26px;
+cursor:pointer;
 }
 
 .menu{
 
 display:flex;
-gap:20px;
+gap:26px;
 align-items:center;
 
 }
 
 .menu a{
 
-color:white;
+color:var(--ink-soft);
 text-decoration:none;
-font-weight:bold;
-transition:.3s;
+font-weight:500;
+font-size:15px;
+position:relative;
+transition:color .25s;
 
+}
+
+.menu a::after{
+content:'';
+position:absolute;
+left:0;
+bottom:-6px;
+width:0;
+height:2px;
+background:var(--brand);
+transition:width .25s;
 }
 
 .menu a:hover{
 
-opacity:.8;
+color:var(--ink);
 
 }
+
+.menu a:hover::after{ width:100%; }
+
+.menu a.cta-link{
+background:var(--ink);
+color:var(--white) !important;
+padding:9px 18px;
+border-radius:30px;
+}
+.menu a.cta-link::after{ display:none; }
+.menu a.cta-link:hover{ background:var(--brand-dark); }
 
 /*==========================
       HERO
@@ -81,15 +151,16 @@ opacity:.8;
 .hero{
 
 background:linear-gradient(
-rgba(0,0,0,.55),
-rgba(0,0,0,.55)),
+180deg,
+rgba(24,20,15,.55),
+rgba(24,20,15,.72)),
 
 url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4");
 
 background-size:cover;
 background-position:center;
 
-padding:100px 20px;
+padding:100px 20px 90px;
 
 text-align:center;
 
@@ -97,23 +168,36 @@ color:white;
 
 }
 
+.hero .eyebrow{
+font-size:13px;
+letter-spacing:.18em;
+text-transform:uppercase;
+color:var(--gold);
+font-weight:600;
+display:inline-block;
+margin-bottom:16px;
+}
+
 .hero h1{
 
-font-size:50px;
+font-size:48px;
+font-weight:600;
 
-margin-bottom:20px;
+margin-bottom:16px;
+letter-spacing:-.01em;
 
 }
 
 .hero p{
 
-font-size:22px;
+font-size:18px;
 
-max-width:700px;
+max-width:620px;
 
 margin:auto;
 
-line-height:1.6;
+line-height:1.75;
+color:rgba(255,255,255,.88);
 
 }
 
@@ -124,9 +208,11 @@ line-height:1.6;
 .buscador{
 
 width:90%;
-max-width:500px;
+max-width:520px;
 
-margin:35px auto;
+margin:-28px auto 20px;
+position:relative;
+z-index:5;
 
 }
 
@@ -134,37 +220,93 @@ margin:35px auto;
 
 width:100%;
 
-padding:16px;
+padding:16px 22px 16px 50px;
 
-border:none;
+border:1px solid var(--line);
 
 border-radius:50px;
 
-font-size:18px;
+font-size:15.5px;
+font-family:inherit;
+outline:none;
 
-box-shadow:0 5px 15px rgba(0,0,0,.15);
+box-shadow:var(--shadow-card);
+background:var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%236B665D' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat 20px center;
+transition:border-color .25s;
 
+}
+
+.buscador input:focus{ border-color:var(--forest); }
+
+#sinResultados{
+display:none;
+width:90%;
+max-width:900px;
+margin:0 auto 60px;
+text-align:center;
+color:var(--ink-soft);
+font-size:15px;
 }
 
 /*==========================
  TITULO
 ===========================*/
 
+.section-head{
+text-align:center;
+margin:44px auto 34px;
+padding:0 20px;
+}
+
+.section-head .eyebrow{
+font-size:13px;
+letter-spacing:.18em;
+text-transform:uppercase;
+color:var(--brand);
+font-weight:600;
+display:inline-block;
+margin-bottom:6px;
+}
+
 .titulo{
 
 text-align:center;
 
-margin:50px 0 30px;
+margin:6px 0 0;
 
-font-size:34px;
+font-size:32px;
+font-weight:600;
 
-color:#333;
+color:var(--ink);
+letter-spacing:-.01em;
 
+}
+
+.section-rule{
+width:56px;
+height:3px;
+background:var(--forest);
+border:none;
+margin:18px auto 0;
+border-radius:2px;
 }
 
 /*==========================
  RESTAURANTES
 ===========================*/
+
+.estado-vacio{
+width:90%;
+max-width:900px;
+margin:0 auto 60px;
+text-align:center;
+background:var(--white);
+border:1px dashed var(--line);
+border-radius:var(--radius-lg);
+padding:60px 30px;
+color:var(--ink-soft);
+font-size:15px;
+}
 
 .grid{
 
@@ -176,31 +318,33 @@ margin:auto;
 display:grid;
 
 grid-template-columns:
-repeat(auto-fit,minmax(320px,1fr));
+repeat(auto-fit,minmax(300px,1fr));
 
-gap:30px;
+gap:28px;
 
-padding-bottom:60px;
+padding-bottom:70px;
 
 }
 
 .card{
 
-background:white;
+background:var(--white);
 
-border-radius:18px;
+border-radius:var(--radius-lg);
 
 overflow:hidden;
 
-box-shadow:0 5px 20px rgba(0,0,0,.12);
+box-shadow:var(--shadow-soft);
+border:1px solid var(--line);
 
-transition:.35s;
+transition:transform .35s, box-shadow .35s, opacity .25s;
 
 }
 
 .card:hover{
 
 transform:translateY(-8px);
+box-shadow:var(--shadow-card);
 
 }
 
@@ -208,9 +352,11 @@ transform:translateY(-8px);
 
 width:100%;
 
-height:220px;
+height:210px;
 
 object-fit:cover;
+display:block;
+background:var(--cream-alt);
 
 }
 
@@ -222,45 +368,48 @@ padding:22px;
 
 .card-body h2{
 
-margin-bottom:12px;
+margin-bottom:10px;
 
-color:#333;
+color:var(--ink);
+font-size:20px;
+font-weight:600;
 
 }
 
 .descripcion{
 
-color:#666;
+color:var(--ink-soft);
 
 line-height:1.6;
 
 height:70px;
 
 overflow:hidden;
+font-size:14.5px;
 
 }
 
 .info{
 
-margin-top:18px;
+margin-top:16px;
 
 display:flex;
 
 justify-content:space-between;
 
-font-size:15px;
+font-size:14px;
 
-color:#777;
+color:var(--ink-soft);
 
 }
 
 .estrellas{
 
-color:#ffc107;
+color:var(--gold);
 
-font-size:20px;
+font-size:18px;
 
-margin-top:15px;
+margin-top:14px;
 
 }
 .boton{
@@ -268,39 +417,39 @@ margin-top:15px;
 display:block;
 margin-top:20px;
 
-background:#ff5722;
-color:white;
+background:var(--ink);
+color:var(--white);
 
 text-align:center;
 
-padding:14px;
+padding:13px;
 
-border-radius:10px;
+border-radius:30px;
 
 text-decoration:none;
 
-font-weight:bold;
+font-weight:600;
+font-size:14.5px;
 
-transition:.3s;
+transition:background .3s;
 
 }
 
 .boton:hover{
 
-background:#e64a19;
+background:var(--brand);
 
 }
 
 footer{
 
-background:#222;
-color:white;
+background:var(--ink);
+color:rgba(255,255,255,.75);
 
 text-align:center;
 
-padding:25px;
-
-margin-top:40px;
+padding:26px;
+font-size:14px;
 
 }
 
@@ -308,36 +457,122 @@ margin-top:40px;
     RESPONSIVE
 ===========================*/
 
+@media(max-width:900px){
+
+.hero h1{ font-size:38px; }
+.titulo{ font-size:28px; }
+
+}
+
 @media(max-width:768px){
 
+nav{
+
+justify-content:space-between;
+
+}
+
+.menu-toggle{ display:block; }
+
+.menu{
+
+display:none;
+margin-top:0;
+flex-direction:column;
+align-items:flex-start;
+gap:0;
+width:100%;
+background:var(--cream);
+position:absolute;
+top:100%;
+left:0;
+padding:10px 6% 16px;
+border-bottom:1px solid var(--line);
+box-shadow:0 12px 20px rgba(43,42,39,.08);
+
+}
+
+.menu.abierto{ display:flex; }
+
+.menu a{
+width:100%;
+padding:13px 0;
+border-bottom:1px solid var(--line);
+}
+.menu a::after{ display:none; }
+.menu a.cta-link{ margin-top:10px; text-align:center; }
+
+.hero{ padding:70px 20px 60px; }
 .hero h1{
 
-font-size:34px;
+font-size:30px;
 
 }
 
 .hero p{
 
-font-size:18px;
+font-size:15.5px;
 
 }
 
-nav{
-
-justify-content:center;
-
-}
-
-.menu{
-
-margin-top:15px;
-
-flex-wrap:wrap;
-justify-content:center;
+.grid{ width:92%; }
+.card img{ height:180px; }
 
 }
 
-}
+
+    .gr-footer {
+        background: #1b2b23;
+        color: white;
+        padding: 60px 8%;
+        margin-top: 80px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .gr-footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 35px;
+        max-width: 1300px;
+        margin: 0 auto;
+    }
+
+    .gr-footer-grid h3 {
+        margin: 0 0 18px 0;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-size: 19px;
+        color: white;
+    }
+
+    .gr-footer-grid p {
+        color: #cfcfc7;
+        font-size: 14.5px;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .gr-footer-grid a {
+        display: block;
+        color: #dcdcd5;
+        text-decoration: none;
+        margin: 10px 0;
+        font-size: 14.5px;
+        transition: .25s;
+    }
+
+    .gr-footer-grid a:hover {
+        color: #e8622c;
+    }
+
+    .gr-footer-copy {
+        text-align: center;
+        margin-top: 40px;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        padding-top: 20px;
+        color: #b7b7ae;
+        font-size: 14px;
+    }
+
 
 </style>
 
@@ -353,13 +588,13 @@ justify-content:center;
 
 </a>
 
-<div class="menu">
+<button class="menu-toggle" id="menuToggle" onclick="toggleMenu()" aria-label="Abrir menú">☰</button>
+
+<div class="menu" id="menu">
 
 <a href="/">Inicio</a>
 
-<a href="/explorar">
-Restaurantes
-</a>
+
 
 <th:block th:if="${usuario == null}">
 
@@ -367,7 +602,7 @@ Restaurantes
 Iniciar sesión
 </a>
 
-<a href="/registro">
+<a href="/registro" class="cta-link">
 Registrarse
 </a>
 
@@ -391,6 +626,8 @@ Cerrar sesión
 
 <section class="hero">
 
+<span class="eyebrow">Catálogo completo</span>
+
 <h1>
 
 Descubre los mejores restaurantes
@@ -409,25 +646,35 @@ Explora cientos de platillos y encuentra el restaurante ideal para ti.
 
 <input
 type="text"
+id="buscarRestaurante"
+oninput="filtrarRestaurantes()"
 placeholder="Buscar restaurante...">
 
 </div>
+<div id="sinResultados">No encontramos restaurantes que coincidan con tu búsqueda.</div>
 
+<div class="section-head">
+<span class="eyebrow">Todo el catálogo</span>
 <h2 class="titulo">
 
 🍽 Restaurantes Disponibles
 
 </h2>
+<hr class="section-rule">
+</div>
 
-<div class="grid">
+<div class="grid" id="listaRestaurantes">
 
 <div
 class="card"
-th:each="r : ${restaurantes}">
+th:each="r : ${restaurantes}"
+th:attr="data-nombre=${r.nombre}">
 
 <img
 th:src="${r.imagen}"
-alt="Restaurante">
+alt="Restaurante"
+loading="lazy"
+onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 400 210%27%3E%3Crect width=%27400%27 height=%27210%27 fill=%27%23F2ECDE%27/%3E%3Ctext x=%27200%27 y=%27112%27 font-family=%27sans-serif%27 font-size=%2736%27 text-anchor=%27middle%27 fill=%27%236B665D%27%3E%F0%9F%8D%BD%3C/text%3E%3C/svg%3E'">
 
 <div class="card-body">
 
@@ -480,6 +727,10 @@ Ver menú
 
 </div>
 
+<div class="estado-vacio" th:if="${restaurantes == null or #lists.isEmpty(restaurantes)}">
+Aún no hay restaurantes publicados. Vuelve pronto para descubrir nuevas opciones.
+</div>
+
 </div>
 
 <footer>
@@ -488,6 +739,49 @@ Ver menú
 
 </footer>
 
+<script>
+    function toggleMenu() {
+        document.getElementById('menu').classList.toggle('abierto');
+    }
+    document.querySelectorAll('.menu a').forEach(a => {
+        a.addEventListener('click', () => document.getElementById('menu').classList.remove('abierto'));
+    });
+
+    function filtrarRestaurantes() {
+        const termino = document.getElementById('buscarRestaurante').value.trim().toLowerCase();
+        const tarjetas = document.querySelectorAll('#listaRestaurantes .card');
+        let visibles = 0;
+
+        tarjetas.forEach(card => {
+            const nombre = (card.getAttribute('data-nombre') || '').toLowerCase();
+            const coincide = nombre.includes(termino);
+            card.style.display = coincide ? '' : 'none';
+            if (coincide) visibles++;
+        });
+
+        const sinResultados = document.getElementById('sinResultados');
+        sinResultados.style.display = (termino && visibles === 0 && tarjetas.length > 0) ? 'block' : 'none';
+    }
+</script>
+<footer class="gr-footer">
+    <div class="gr-footer-grid">
+        <div>
+            <h3>GourmetRoots</h3>
+            <p>La mejor plataforma para descubrir restaurantes y ordenar comida.</p>
+        </div>
+        <div>
+            <h3>Enlaces</h3>
+            <a href="/">Inicio</a>
+            <a href="/restaurantes">Restaurantes</a>
+            <a href="/acerca">Acerca de</a>
+            <a href="/contacto">Contacto</a>
+        </div>
+        
+    </div>
+    <div class="gr-footer-copy">
+        © 2026 GourmetRoots | Todos los derechos reservados.
+    </div>
+</footer>
 </body>
 
 </html>

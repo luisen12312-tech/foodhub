@@ -9,37 +9,63 @@
     <link rel="stylesheet" th:href="@{/css/responsive.css}">
 
     <style>
+        :root {
+            --bg: #faf5ec;
+            --top-strip: #1b2b23;
+            --text-dark: #22261f;
+            --text-muted: #6b6b63;
+            --accent: #e8622c;
+            --accent-dark: #d1531f;
+            --card-bg: #ffffff;
+            --editar-bg: #e3edff;
+            --editar-fg: #0d6efd;
+            --eliminar-bg: #fde3e3;
+            --eliminar-fg: #dc3545;
+            --font-serif: Georgia, 'Times New Roman', Times, serif;
+            --font-sans: Arial, Helvetica, sans-serif;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: var(--font-sans);
         }
 
         body {
-            background: #f4f4f4;
-            color: #333;
+            background: var(--bg);
+            color: var(--text-dark);
+        }
+
+        /*======================
+              FRANJA SUPERIOR
+        =======================*/
+        .top-strip {
+            width: 100%;
+            height: 8px;
+            background: var(--top-strip);
         }
 
         /*======================
                 HEADER
         =======================*/
         header {
-            background: #ff5722;
-            color: white;
-            padding: 30px 8%;
+            background: #faf5ec;
+            color: var(--text-dark);
+            padding: 35px 8%;
             text-align: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
         }
 
         header h1 {
+            font-family: var(--font-serif);
             font-size: 32px;
             margin-bottom: 8px;
         }
 
         header p {
-            font-size: 16px;
-            opacity: 0.9;
+            font-size: 15px;
+            color: var(--text-muted);
         }
 
         /*======================
@@ -56,18 +82,18 @@
         =======================*/
         .boton {
             display: inline-block;
-            background: #6c757d;
+            background: var(--text-dark);
             color: white;
             text-decoration: none;
-            padding: 12px 20px;
-            border-radius: 8px;
+            padding: 12px 22px;
+            border-radius: 999px;
             margin-bottom: 25px;
             font-weight: bold;
-            transition: .3s ease;
+            transition: .25s ease;
         }
 
         .boton:hover {
-            background: #5a6268;
+            background: #10120e;
             transform: translateY(-2px);
         }
 
@@ -77,8 +103,8 @@
         .alerta-exito {
             background: #d1e7dd;
             color: #0f5132;
-            padding: 15px;
-            border-radius: 8px;
+            padding: 15px 18px;
+            border-radius: 12px;
             margin-bottom: 20px;
             border-left: 5px solid #0f5132;
             font-weight: 500;
@@ -87,8 +113,8 @@
         .alerta-error {
             background: #f8d7da;
             color: #842029;
-            padding: 15px;
-            border-radius: 8px;
+            padding: 15px 18px;
+            border-radius: 12px;
             margin-bottom: 20px;
             border-left: 5px solid #842029;
             font-weight: 500;
@@ -98,10 +124,10 @@
           TABLA PROFESIONAL
         =======================*/
         .tabla-contenedor {
-            background: white;
-            border-radius: 15px;
+            background: var(--card-bg);
+            border-radius: 18px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
         }
 
         table {
@@ -111,17 +137,17 @@
         }
 
         th {
-            background-color: #222;
+            background-color: var(--top-strip);
             color: white;
-            padding: 15px 20px;
-            font-size: 15px;
+            padding: 16px 20px;
+            font-size: 14px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.6px;
         }
 
         td {
             padding: 15px 20px;
-            border-bottom: 1px solid #edf2f7;
+            border-bottom: 1px solid #f0ece2;
             font-size: 15px;
             color: #4a5568;
             vertical-align: middle;
@@ -132,13 +158,13 @@
         }
 
         tr:hover {
-            background-color: #f8f9fa;
+            background-color: #faf7f0;
         }
 
         /* Badges de Roles */
         .badge {
             display: inline-block;
-            padding: 4px 12px;
+            padding: 4px 14px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: bold;
@@ -168,30 +194,32 @@
         .editar, .eliminar {
             display: inline-block;
             text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 6px;
+            padding: 9px 18px;
+            border-radius: 999px;
             font-size: 14px;
             font-weight: 600;
             text-align: center;
-            transition: .2s ease;
+            transition: .25s ease;
         }
 
         .editar {
-            background: #0d6efd;
-            color: white;
+            background: var(--editar-bg);
+            color: var(--editar-fg);
         }
 
         .editar:hover {
-            background: #0b5ed7;
-        }
-
-        .eliminar {
-            background: #dc3545;
+            background: var(--editar-fg);
             color: white;
         }
 
+        .eliminar {
+            background: var(--eliminar-bg);
+            color: var(--eliminar-fg);
+        }
+
         .eliminar:hover {
-            background: #bb2d3b;
+            background: var(--eliminar-fg);
+            color: white;
         }
 
         /*==================================
@@ -215,18 +243,17 @@
 
             tr {
                 background: white;
-                border-radius: 12px;
+                border-radius: 14px;
                 padding: 15px;
                 margin-bottom: 15px;
-                box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-                border: 1px solid #e2e8f0;
+                box-shadow: 0 4px 14px rgba(0,0,0,0.08);
             }
 
             td {
                 text-align: right;
                 padding-left: 45%;
                 position: relative;
-                border-bottom: 1px dashed #edf2f7;
+                border-bottom: 1px dashed #f0ece2;
                 padding-top: 12px;
                 padding-bottom: 12px;
             }
@@ -243,7 +270,7 @@
                 width: 40%;
                 text-align: left;
                 font-weight: bold;
-                color: #222;
+                color: var(--text-dark);
             }
 
             .acciones {
@@ -260,14 +287,42 @@
                 padding: 10px;
             }
         }
+         .navbar{
+            width:100%; background:rgba(251,247,239,.92); backdrop-filter:blur(8px);
+            color:var(--ink); display:flex; justify-content:space-between; align-items:center;
+            padding:16px 6%; position:sticky; top:0; z-index:999;
+            border-bottom:1px solid var(--line);
+        }
+        .logo{ font-family:'Fraunces', serif; font-size:26px; font-weight:600; display:flex; align-items:center; gap:8px; letter-spacing:-.02em; }
+        .logo span{ color:var(--brand); }
+        .menu{ display:flex; gap:30px; align-items:center; }
+        .menu a{
+            text-decoration:none; color:var(--ink-soft); font-weight:500; font-size:15px;
+            position:relative; transition:color .25s;
+        }
+        .menu a::after{
+            content:''; position:absolute; left:0; bottom:-6px; width:0; height:2px;
+            background:var(--brand); transition:width .25s;
+        }
+        .menu a:hover{ color:var(--ink); }
+        .menu a:hover::after{ width:100%; }
+        .menu a.cta-link{
+            background:var(--ink); color:var(--white) !important; padding:10px 20px; border-radius:30px;
+        }
+        .menu a.cta-link::after{ display:none; }
+        .menu a.cta-link:hover{ background:var(--brand-dark); }
+        .menu-toggle{ display:none; background:none; border:none; color:var(--ink); font-size:26px; cursor:pointer; }
+
     </style>
 </head>
 
 <body>
 
+    <div class="top-strip"></div>
+
     <header>
         <h1>👥 Usuarios Registrados</h1>
-        <p>Administración de usuarios de FoodHub</p>
+        <p>Administración de usuarios de GourmetRoots</p>
     </header>
 
     <div class="contenedor">

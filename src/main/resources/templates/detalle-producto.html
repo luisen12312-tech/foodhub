@@ -8,46 +8,91 @@
 
 <title>Detalle del Producto</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+
+:root{
+    --cream:#FBF7EF;
+    --cream-alt:#F2ECDE;
+    --ink:#2B2A27;
+    --ink-soft:#6B665D;
+    --brand:#E2542B;
+    --brand-dark:#BE3E1C;
+    --forest:#3F5B41;
+    --forest-light:#E7EEE4;
+    --gold:#C79A45;
+    --white:#FFFFFF;
+    --line:#E7E0D2;
+    --radius-lg:22px;
+    --shadow-soft:0 10px 30px rgba(43,42,39,.07);
+    --shadow-card:0 14px 34px rgba(43,42,39,.10);
+}
 
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial,sans-serif;
+    font-family:'Inter', Arial, sans-serif;
 }
 
+html,body{ max-width:100%; overflow-x:hidden; }
+
 body{
-    background:#f4f4f4;
+    background:var(--cream);
+    color:var(--ink);
 }
+
+:focus-visible{ outline:2px solid var(--forest); outline-offset:3px; }
+@media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
 
 .header{
 
-    background:#ff5722;
-    color:white;
+    background:var(--ink);
+    color:var(--white);
     text-align:center;
-    padding:25px;
+    padding:40px 20px 46px;
 
+}
+
+.header h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:30px;
+    letter-spacing:-.01em;
+}
+
+.header p{
+    margin-top:8px;
+    font-size:13px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:600;
 }
 
 .contenedor{
 
     width:90%;
     max-width:900px;
-    margin:40px auto;
+    margin:-30px auto 60px;
+    position:relative;
+    z-index:2;
 
 }
 
 .card{
 
-    background:white;
+    background:var(--white);
 
-    border-radius:15px;
+    border-radius:var(--radius-lg);
 
     overflow:hidden;
 
-    box-shadow:0 5px 15px rgba(0,0,0,.15);
+    box-shadow:var(--shadow-card);
+    border:1px solid var(--line);
 
 }
 
@@ -56,68 +101,124 @@ body{
     width:100%;
     height:350px;
     object-fit:cover;
+    display:block;
+    background:var(--cream-alt);
 
 }
 
 .info{
 
-    padding:30px;
+    padding:36px;
 
 }
 
 .info h2{
 
-    color:#333;
-    margin-bottom:20px;
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:28px;
+    color:var(--ink);
+    margin-bottom:22px;
+    letter-spacing:-.01em;
 
 }
 
 .info p{
 
-    margin-bottom:15px;
-    line-height:1.6;
-    color:#555;
+    margin-bottom:16px;
+    line-height:1.65;
+    color:var(--ink-soft);
+    font-size:15.5px;
 
+}
+
+.info p strong{
+    display:block;
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    font-weight:600;
+    margin-bottom:6px;
 }
 
 .precio{
 
-    font-size:24px;
-    color:#28a745;
-    font-weight:bold;
+    font-size:30px;
+    color:var(--forest);
+    font-weight:700;
+    font-family:'Fraunces', serif;
+    margin:22px 0;
 
 }
 
 .restaurante{
 
-    color:#ff5722;
-    font-weight:bold;
+    display:inline-block;
+    background:var(--forest-light);
+    color:var(--forest);
+    font-weight:600;
+    font-size:14.5px;
+    padding:5px 14px;
+    border-radius:20px;
 
 }
 
 .boton{
 
-    display:inline-block;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
 
-    margin-top:25px;
+    margin-top:28px;
 
-    background:#ff5722;
+    background:var(--ink);
 
-    color:white;
+    color:var(--white);
 
     text-decoration:none;
 
-    padding:12px 22px;
+    padding:13px 26px;
 
-    border-radius:8px;
+    border-radius:30px;
 
-    transition:.3s;
+    font-weight:600;
+    font-size:14.5px;
+
+    transition:background .3s, transform .3s;
 
 }
 
 .boton:hover{
 
-    background:#e64a19;
+    background:var(--brand);
+    transform:translateX(-3px);
+
+}
+
+/*==========================
+    RESPONSIVE
+===========================*/
+
+@media(max-width:768px){
+
+    .header{ padding:32px 20px 40px; }
+    .header h1{ font-size:24px; }
+
+    .contenedor{ width:92%; margin-top:-22px; }
+
+    .card img{ height:230px; }
+
+    .info{ padding:24px; }
+    .info h2{ font-size:22px; }
+
+    .precio{ font-size:25px; }
+
+}
+
+@media(max-width:420px){
+
+    .card img{ height:190px; }
 
 }
 
@@ -141,7 +242,8 @@ body{
 
 <img
 th:src="${producto.imagen}"
-alt="Imagen del producto">
+alt="Imagen del producto"
+onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 900 350%27%3E%3Crect width=%27900%27 height=%27350%27 fill=%27%23F2ECDE%27/%3E%3Ctext x=%27450%27 y=%27185%27 font-family=%27sans-serif%27 font-size=%2760%27 text-anchor=%27middle%27 fill=%27%236B665D%27%3E%F0%9F%8D%BD%3C/text%3E%3C/svg%3E'">
 
 <div class="info">
 
@@ -149,7 +251,7 @@ alt="Imagen del producto">
 
 <p>
 
-<strong>Descripción:</strong>
+<strong>Descripción</strong>
 
 <span th:text="${producto.descripcion}"></span>
 
@@ -164,7 +266,7 @@ $
 
 <p>
 
-<strong>Restaurante:</strong>
+<strong>Restaurante</strong>
 
 <span
 class="restaurante"
@@ -186,6 +288,24 @@ class="boton">
 </div>
 
 </div>
-
+<footer class="gr-footer">
+    <div class="gr-footer-grid">
+        <div>
+            <h3>GourmetRoots</h3>
+            <p>La mejor plataforma para descubrir restaurantes y ordenar comida.</p>
+        </div>
+        <div>
+            <h3>Enlaces</h3>
+            <a href="/">Inicio</a>
+            <a href="/restaurantes">Restaurantes</a>
+            <a href="/acerca">Acerca de</a>
+            <a href="/contacto">Contacto</a>
+        </div>
+        
+    </div>
+    <div class="gr-footer-copy">
+        © 2026 GourmetRoots | Todos los derechos reservados.
+    </div>
+</footer>
 </body>
 </html>

@@ -4,85 +4,318 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GourmetRoots | Inicio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { background: #f5f5f5; font-family: sans-serif; margin: 0; padding: 0; }
-        .navbar { width: 100%; background: #f45c2e; color: white; display: flex; justify-content: space-between; align-items: center; padding: 18px 8%; position: sticky; top: 0; z-index: 999; box-shadow: 0 4px 10px rgba(0,0,0,.15); box-sizing: border-box; }
-        .logo { font-size: 32px; font-weight: bold; }
-        .logo span { color: #ffe082; }
-        .menu { display: flex; gap: 25px; align-items: center; }
-        .menu a { text-decoration: none; color: white; font-weight: bold; transition: .3s; }
-        .menu a:hover { color: #ffe082; }
-        .hero { min-height: 85vh; background: linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.55)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836'); background-size: cover; background-position: center; display: flex; justify-content: center; align-items: center; text-align: center; color: white; padding: 30px; }
-        .hero h1 { font-size: 60px; margin-bottom: 20px; }
-        .hero p { font-size: 22px; max-width: 750px; margin: auto; line-height: 1.8; }
-        .hero a { display: inline-block; margin-top: 35px; background: #e8643c; color: white; text-decoration: none; padding: 18px 35px; border-radius: 10px; font-size: 20px; transition: .3s; }
-        .hero a:hover { transform: translateY(-4px); }
-        .titulo { text-align: center; margin-top: 70px; margin-bottom: 50px; font-size: 38px; color: #333; }
-        .categorias { width: 90%; max-width: 1200px; margin: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; }
-        .categoria { background: white; border-radius: 18px; padding: 35px; text-align: center; box-shadow: 0 3px 10px rgba(0,0,0,.12); }
-        .categoria h2 { font-size: 55px; margin: 0; }
-        .categoria h3 { margin-top: 20px; color: #333; }
-        .categoria p { margin-top: 12px; color: #666; line-height: 1.6; }
-        .restaurantes { width: 90%; max-width: 1300px; margin: 70px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
-        .restaurant-card { background: white; border-radius: 18px; overflow: hidden; box-shadow: 0 6px 18px rgba(0,0,0,.15); transition: .35s; }
-        .restaurant-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,.22); }
-        .restaurant-card img { width: 100%; height: 240px; object-fit: cover; }
-        .restaurant-info { padding: 22px; }
-        .restaurant-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .restaurant-header h3 { font-size: 24px; color: #333; margin: 0; }
-        .rating { background: #fff3cd; padding: 6px 12px; border-radius: 20px; font-weight: bold; color: #856404; }
-        .descripcion { margin-top: 10px; color: #666; line-height: 1.6; height: 70px; overflow: hidden; }
-        .datos { display: flex; justify-content: space-between; margin-top: 12px; font-size: 15px; color: #555; }
-        .btn-menu { display: block; margin-top: 25px; text-align: center; background: #ff5722; color: white !important; padding: 14px; border-radius: 10px; text-decoration: none; font-weight: bold; }
+        :root{
+            --cream:#FBF7EF;
+            --cream-alt:#F2ECDE;
+            --ink:#2B2A27;
+            --ink-soft:#6B665D;
+            --brand:#E2542B;
+            --brand-dark:#BE3E1C;
+            --forest:#3F5B41;
+            --forest-light:#E7EEE4;
+            --gold:#C79A45;
+            --white:#FFFFFF;
+            --line:#E7E0D2;
+            --radius-lg:22px;
+            --radius-md:14px;
+            --shadow-soft:0 10px 30px rgba(43,42,39,.07);
+            --shadow-card:0 14px 34px rgba(43,42,39,.10);
+        }
+        *{ box-sizing:border-box; }
+        html,body{ max-width:100%; overflow-x:hidden; }
+        body{
+            background:var(--cream);
+            font-family:'Inter', sans-serif;
+            color:var(--ink);
+            margin:0; padding:0;
+        }
+        h1,h2,h3{ font-family:'Fraunces', serif; }
+        a{ font-family:inherit; }
+        :focus-visible{ outline:2px solid var(--forest); outline-offset:3px; }
+        @media (prefers-reduced-motion: reduce){
+            *{ animation:none !important; transition:none !important; }
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar{
+            width:100%; background:rgba(251,247,239,.92); backdrop-filter:blur(8px);
+            color:var(--ink); display:flex; justify-content:space-between; align-items:center;
+            padding:16px 6%; position:sticky; top:0; z-index:999;
+            border-bottom:1px solid var(--line);
+        }
+        .logo{ font-family:'Fraunces', serif; font-size:26px; font-weight:600; display:flex; align-items:center; gap:8px; letter-spacing:-.02em; }
+        .logo span{ color:var(--brand); }
+        .menu{ display:flex; gap:30px; align-items:center; }
+        .menu a{
+            text-decoration:none; color:var(--ink-soft); font-weight:500; font-size:15px;
+            position:relative; transition:color .25s;
+        }
+        .menu a::after{
+            content:''; position:absolute; left:0; bottom:-6px; width:0; height:2px;
+            background:var(--brand); transition:width .25s;
+        }
+        .menu a:hover{ color:var(--ink); }
+        .menu a:hover::after{ width:100%; }
+        .menu a.cta-link{
+            background:var(--ink); color:var(--white) !important; padding:10px 20px; border-radius:30px;
+        }
+        .menu a.cta-link::after{ display:none; }
+        .menu a.cta-link:hover{ background:var(--brand-dark); }
+        .menu-toggle{ display:none; background:none; border:none; color:var(--ink); font-size:26px; cursor:pointer; }
+
+        /* ===== HERO ===== */
+        .hero{
+            position:relative; min-height:86vh;
+            background:
+                linear-gradient(180deg, rgba(24,20,15,.55), rgba(24,20,15,.72)),
+                url('https://images.unsplash.com/photo-1504674900247-0877df9cc836');
+            background-size:cover; background-position:center;
+            display:flex; justify-content:center; align-items:center; text-align:center;
+            color:var(--white); padding:30px; overflow:hidden;
+        }
+        .hero-content{ max-width:780px; position:relative; z-index:2; }
+        .eyebrow{
+            font-size:13px; letter-spacing:.18em; text-transform:uppercase;
+            color:var(--gold); font-weight:600; margin-bottom:18px; display:inline-block;
+        }
+        .hero h1{ font-size:58px; font-weight:600; line-height:1.12; margin:0 0 22px; letter-spacing:-.01em; }
+        .hero h1 em{ font-style:italic; color:#FFE3C7; font-weight:400; }
+        .hero p{ font-family:'Inter',sans-serif; font-size:19px; max-width:620px; margin:0 auto; line-height:1.75; color:rgba(255,255,255,.88); }
+        .hero a{
+            display:inline-block; margin-top:34px; background:var(--brand); color:var(--white);
+            text-decoration:none; padding:16px 34px; border-radius:40px; font-size:16px; font-weight:600;
+            transition:transform .3s, background .3s; box-shadow:0 12px 24px rgba(226,84,43,.35);
+        }
+        .hero a:hover{ transform:translateY(-3px); background:var(--brand-dark); }
+
+        /* Vine / root motif — signature element */
+        .roots-divider{ width:100%; height:64px; display:block; }
+        .roots-divider path{ stroke:var(--forest); }
+
+        /* ===== SECTION HEADINGS ===== */
+        .section-head{ text-align:center; margin:80px auto 46px; padding:0 20px; }
+        .section-head .eyebrow{ color:var(--brand); }
+        .titulo{ font-size:36px; font-weight:600; color:var(--ink); margin:6px 0 0; letter-spacing:-.01em; }
+        .section-rule{ width:56px; height:3px; background:var(--forest); border:none; margin:20px auto 0; border-radius:2px; }
+
+        /* ===== CATEGORIAS ===== */
+        .categorias{ width:90%; max-width:1200px; margin:auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:22px; }
+        .categoria{
+            background:var(--white); border-radius:var(--radius-lg); padding:34px 28px; text-align:center;
+            box-shadow:var(--shadow-soft); border:1px solid var(--line); transition:transform .3s, box-shadow .3s;
+        }
+        .categoria:hover{ transform:translateY(-6px); box-shadow:var(--shadow-card); }
+        .icon-circle{
+            width:64px; height:64px; margin:0 auto 18px; border-radius:50%;
+            background:var(--forest-light); display:flex; align-items:center; justify-content:center; font-size:30px;
+        }
+        .categoria h3{ font-size:19px; font-weight:600; color:var(--ink); margin:0; }
+        .categoria p{ margin-top:10px; color:var(--ink-soft); line-height:1.6; font-size:14.5px; }
+
+        /* ===== RESTAURANTES ===== */
+        .restaurantes{ width:90%; max-width:1300px; margin:0 auto 90px; display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:28px; }
+        .restaurant-card{
+            background:var(--white); border-radius:var(--radius-lg); overflow:hidden;
+            box-shadow:var(--shadow-soft); border:1px solid var(--line); transition:transform .35s, box-shadow .35s;
+        }
+        .restaurant-card:hover{ transform:translateY(-8px); box-shadow:var(--shadow-card); }
+        .restaurant-card img{ width:100%; height:230px; object-fit:cover; display:block; }
+        .restaurant-info{ padding:24px; }
+        .restaurant-header{ display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:12px; }
+        .restaurant-header h3{ font-size:21px; font-weight:600; color:var(--ink); margin:0; }
+        .rating{ background:var(--forest-light); color:var(--forest); padding:6px 13px; border-radius:20px; font-weight:600; font-size:13.5px; white-space:nowrap; }
+        .descripcion{ margin-top:6px; color:var(--ink-soft); line-height:1.6; height:70px; overflow:hidden; font-size:14.5px; }
+        .datos{ display:flex; justify-content:space-between; margin-top:14px; font-size:14px; color:var(--ink-soft); }
+        .btn-menu{
+            display:block; margin-top:22px; text-align:center; background:var(--ink); color:var(--white) !important;
+            padding:14px; border-radius:30px; text-decoration:none; font-weight:600; font-size:14.5px;
+            transition:background .3s;
+        }
+        .btn-menu:hover{ background:var(--brand); }
+
+        /* Empty-state placeholder — visible only when there are no items yet */
+        .estado-vacio{
+            width:90%; max-width:900px; margin:0 auto 90px; text-align:center;
+            background:var(--white); border:1px dashed var(--line); border-radius:var(--radius-lg);
+            padding:60px 30px; color:var(--ink-soft);
+        }
+        .estado-vacio p{ margin:0; font-size:15px; }
+
+        /* ===== CHATBOT ===== */
+        .chatbot-toggle-btn{
+            position:fixed; bottom:24px; right:24px; background:var(--brand); color:white; border:none;
+            border-radius:50%; width:60px; height:60px; font-size:26px; cursor:pointer;
+            box-shadow:0 10px 24px rgba(226,84,43,.4); z-index:9999; display:flex; justify-content:center;
+            align-items:center; transition:transform .3s, background .3s;
+        }
+        .chatbot-toggle-btn:hover{ transform:scale(1.08); background:var(--brand-dark); }
+        .chatbot-container{
+            position:fixed; bottom:94px; right:24px; width:350px; max-width:90vw; height:450px; max-height:70vh;
+            background:var(--white); border-radius:var(--radius-lg); box-shadow:0 18px 40px rgba(43,42,39,.22);
+            display:none; flex-direction:column; overflow:hidden; z-index:9999; border:1px solid var(--line);
+        }
+        .chatbot-header{
+            background:var(--ink); color:var(--white); padding:16px 18px; font-weight:600; font-family:'Fraunces',serif;
+            display:flex; justify-content:space-between; align-items:center; font-size:15.5px;
+        }
+        .chatbot-header button{ background:none; border:none; color:var(--white); font-size:18px; cursor:pointer; opacity:.75; }
+        .chatbot-header button:hover{ opacity:1; }
+        .chatbot-messages{ flex:1; padding:16px; overflow-y:auto; display:flex; flex-direction:column; gap:10px; background:var(--cream); }
+        .message{ padding:10px 14px; border-radius:14px; max-width:80%; font-size:13.5px; line-height:1.5; }
+        .bot-message{ background:var(--white); color:var(--ink); align-self:flex-start; border:1px solid var(--line); border-bottom-left-radius:3px; }
+        .user-message{ background:var(--brand); color:var(--white); align-self:flex-end; border-bottom-right-radius:3px; }
+        .chatbot-input-area{ display:flex; padding:12px; background:var(--white); border-top:1px solid var(--line); }
+        .chatbot-input-area input{ flex:1; min-width:0; padding:10px 14px; border:1px solid var(--line); border-radius:24px; outline:none; font-family:inherit; }
+        .chatbot-input-area input:focus{ border-color:var(--forest); }
+        .chatbot-input-area button{ background:var(--ink); color:white; border:none; padding:0 18px; margin-left:8px; border-radius:24px; cursor:pointer; font-weight:600; transition:background .3s; }
+        .chatbot-input-area button:hover{ background:var(--brand); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width:900px){
+            .hero h1{ font-size:42px; }
+            .hero p{ font-size:17px; }
+            .titulo{ font-size:30px; }
+        }
+        @media (max-width:768px){
+            .navbar{ padding:14px 5%; flex-wrap:wrap; }
+            .menu-toggle{ display:block; }
+            .menu{
+                display:none; flex-direction:column; align-items:flex-start; gap:0; width:100%;
+                background:var(--cream); position:absolute; top:100%; left:0; padding:10px 6% 16px;
+                border-bottom:1px solid var(--line); box-shadow:0 12px 20px rgba(43,42,39,.08);
+            }
+            .menu.abierto{ display:flex; }
+            .menu a{ width:100%; padding:13px 0; border-bottom:1px solid var(--line); }
+            .menu a::after{ display:none; }
+            .menu a.cta-link{ margin-top:10px; text-align:center; }
+
+            .hero{ min-height:72vh; padding:20px; }
+            .hero h1{ font-size:32px; }
+            .hero p{ font-size:15.5px; }
+            .hero a{ padding:14px 26px; font-size:15.5px; margin-top:24px; }
+
+            .section-head{ margin:52px auto 34px; }
+            .titulo{ font-size:26px; }
+
+            .categorias, .restaurantes{ width:92%; }
+            .categoria{ padding:26px 20px; }
+            .restaurant-card img{ height:190px; }
+        }
+        @media (max-width:420px){
+            .logo{ font-size:21px; }
+            .hero h1{ font-size:27px; }
+            .hero p{ font-size:14.5px; }
+            .chatbot-container{ right:5vw; bottom:82px; }
+            .chatbot-toggle-btn{ width:52px; height:52px; font-size:23px; }
+        }
+
         
-        /* CHATBOT COPIABLE */
-        .chatbot-toggle-btn { position: fixed; bottom: 30px; right: 30px; background: #ff5722; color: white; border: none; border-radius: 50%; width: 60px; height: 60px; font-size: 28px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: transform 0.3s; }
-        .chatbot-toggle-btn:hover { transform: scale(1.1); }
-        .chatbot-container { position: fixed; bottom: 100px; right: 30px; width: 350px; height: 450px; background: white; border-radius: 15px; box-shadow: 0 5px 25px rgba(0,0,0,0.25); display: none; flex-direction: column; overflow: hidden; z-index: 9999; }
-        .chatbot-header { background: #f45c2e; color: white; padding: 15px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
-        .chatbot-header button { background: none; border: none; color: white; font-size: 18px; cursor: pointer; }
-        .chatbot-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: #f9f9f9; }
-        .message { padding: 10px 14px; border-radius: 12px; max-width: 80%; font-size: 14px; line-height: 1.4; }
-        .bot-message { background: #ebebeb; color: #333; align-self: flex-start; border-bottom-left-radius: 2px; }
-        .user-message { background: #ff5722; color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
-        .chatbot-input-area { display: flex; padding: 10px; background: white; border-top: 1px solid #eee; }
-        .chatbot-input-area input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 8px; outline: none; }
-        .chatbot-input-area button { background: #ff5722; color: white; border: none; padding: 0 15px; margin-left: 8px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+    .gr-footer {
+        background: #1b2b23;
+        color: white;
+        padding: 60px 8%;
+        margin-top: 80px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .gr-footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 35px;
+        max-width: 1300px;
+        margin: 0 auto;
+    }
+
+    .gr-footer-grid h3 {
+        margin: 0 0 18px 0;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-size: 19px;
+        color: white;
+    }
+
+    .gr-footer-grid p {
+        color: #cfcfc7;
+        font-size: 14.5px;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .gr-footer-grid a {
+        display: block;
+        color: #dcdcd5;
+        text-decoration: none;
+        margin: 10px 0;
+        font-size: 14.5px;
+        transition: .25s;
+    }
+
+    .gr-footer-grid a:hover {
+        color: #e8622c;
+    }
+
+    .gr-footer-copy {
+        text-align: center;
+        margin-top: 40px;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        padding-top: 20px;
+        color: #b7b7ae;
+        font-size: 14px;
+    }
+
     </style>
 </head>
 <body>
     <nav class="navbar">
         <div class="logo">🌱 Gourmet<span>Roots</span></div>
-        <div class="menu">
+        <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()" aria-label="Abrir menú">☰</button>
+        <div class="menu" id="menu">
             <a href="/">Inicio</a>
             <a href="/explorar">Restaurantes</a>
             <a href="/acerca">Acerca</a>
             <a href="/contacto">Contacto</a>
             <a href="/login">Iniciar sesión</a>
-            <a href="/registro">Registrarse</a>
+            <a href="/registro" class="cta-link">Registrarse</a>
         </div>
     </nav>
 
     <section class="hero">
-        <div>
-            <h1>Tu comida favorita en minutos</h1>
+        <div class="hero-content">
+            <span class="eyebrow">Sabores locales, a un clic</span>
+            <h1>Tu comida favorita, <em>en minutos</em></h1>
             <p>Descubre restaurantes, ordena fácilmente, administra tus pedidos y disfruta de la mejor experiencia gastronómica con GourmetRoots.</p>
             <a href="/explorar">🍽 Explorar Restaurantes</a>
         </div>
     </section>
 
-    <h2 class="titulo">Categorías Populares</h2>
+    <svg class="roots-divider" viewBox="0 0 1200 64" preserveAspectRatio="none" fill="none" aria-hidden="true">
+        <path d="M0 32 C 150 8, 250 56, 400 32 S 650 8, 800 32 S 1050 56, 1200 32" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+
+    <div class="section-head">
+        <span class="eyebrow">Explora por tipo de cocina</span>
+        <h2 class="titulo">Categorías Populares</h2>
+        <hr class="section-rule">
+    </div>
     <section class="categorias">
-        <div class="categoria"><h2>🌮</h2><h3>Comida Mexicana</h3><p>Los mejores tacos, burritos y antojitos.</p></div>
-        <div class="categoria"><h2>🍔</h2><h3>Comida Rápida</h3><p>Hamburguesas, papas y mucho más.</p></div>
-        <div class="categoria"><h2>🍕</h2><h3>Italiana</h3><p>Pastas, pizzas y lasagnas.</p></div>
-        <div class="categoria"><h2>🍣</h2><h3>Japonesa</h3><p>Sushi y cocina oriental.</p></div>
+        <div class="categoria"><div class="icon-circle">🌮</div><h3>Comida Mexicana</h3><p>Los mejores tacos, burritos y antojitos.</p></div>
+        <div class="categoria"><div class="icon-circle">🍔</div><h3>Comida Rápida</h3><p>Hamburguesas, papas y mucho más.</p></div>
+        <div class="categoria"><div class="icon-circle">🍕</div><h3>Italiana</h3><p>Pastas, pizzas y lasagnas.</p></div>
+        <div class="categoria"><div class="icon-circle">🍣</div><h3>Japonesa</h3><p>Sushi y cocina oriental.</p></div>
     </section>
 
-    <h2 class="titulo">Restaurantes Destacados</h2>
+    <div class="section-head">
+        <span class="eyebrow">Elegidos por la comunidad</span>
+        <h2 class="titulo">Restaurantes Destacados</h2>
+        <hr class="section-rule">
+    </div>
     <section class="restaurantes">
         <div class="restaurant-card" th:each="r : ${restaurantes}">
-            <img th:src="${r.imagen}" alt="Restaurante">
+            <img th:src="${r.imagen}" alt="Restaurante" loading="lazy"
+                 onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 400 230%27%3E%3Crect width=%27400%27 height=%27230%27 fill=%27%23F2ECDE%27/%3E%3Ctext x=%27200%27 y=%27122%27 font-family=%27sans-serif%27 font-size=%2740%27 text-anchor=%27middle%27 fill=%27%236B665D%27%3E%F0%9F%8D%BD%3C/text%3E%3C/svg%3E'">
             <div class="restaurant-info">
                 <div class="restaurant-header">
                     <th:block><h3 th:text="${r.nombre}">Restaurante Gourmet</h3></th:block>
@@ -92,6 +325,9 @@
                 <div class="datos"><span>📍 <span th:text="${r.direccion}">Calle Principal #123</span></span></div>
                 <a class="btn-menu" th:href="@{/restaurantes/{id}(id=${r.id})}">Ver Menú</a>
             </div>
+        </div>
+        <div class="estado-vacio" th:if="${restaurantes == null or #lists.isEmpty(restaurantes)}">
+            <p>Aún no hay restaurantes publicados. Vuelve pronto para descubrir nuevas opciones.</p>
         </div>
     </section>
 
@@ -108,6 +344,13 @@
     <button class="chatbot-toggle-btn" onclick="toggleChat()">💬</button>
 
     <script>
+        function toggleMenu() {
+            document.getElementById('menu').classList.toggle('abierto');
+        }
+        document.querySelectorAll('.menu a').forEach(a => {
+            a.addEventListener('click', () => document.getElementById('menu').classList.remove('abierto'));
+        });
+
         function toggleChat() {
             const chat = document.getElementById('chatbot');
             chat.style.display = chat.style.display === 'flex' ? 'none' : 'flex';
@@ -115,7 +358,7 @@
         }
         function handleKeyPress(e) { if(e.key === 'Enter') sendMessage(); }
         function scrollToBottom() { const b = document.getElementById('chatMessages'); b.scrollTop = b.scrollHeight; }
-        
+
         function sendMessage() {
             const input = document.getElementById('chatInput');
             const text = input.value.trim();
@@ -155,5 +398,25 @@
             });
         }
     </script>
+
+    <footer class="gr-footer">
+    <div class="gr-footer-grid">
+        <div>
+            <h3>GourmetRoots</h3>
+            <p>La mejor plataforma para descubrir restaurantes y ordenar comida.</p>
+        </div>
+        <div>
+            <h3>Enlaces</h3>
+            <a href="/">Inicio</a>
+            <a href="/restaurantes">Restaurantes</a>
+            <a href="/acerca">Acerca de</a>
+            <a href="/contacto">Contacto</a>
+        </div>
+        
+    </div>
+    <div class="gr-footer-copy">
+        © 2026 GourmetRoots | Todos los derechos reservados.
+    </div>
+</footer>
 </body>
 </html>

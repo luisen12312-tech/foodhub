@@ -9,18 +9,41 @@
     <link rel="stylesheet" th:href="@{/css/responsive.css}">
 
     <style>
+        :root {
+            --bg: #faf5ec;
+            --navbar-bg: #faf5ec;
+            --top-strip: #1b2b23;
+            --text-dark: #22261f;
+            --text-muted: #6b6b63;
+            --accent: #e8622c;
+            --accent-dark: #d1531f;
+            --font-serif: Georgia, 'Times New Roman', Times, serif;
+            --font-sans: Arial, Helvetica, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            background: #f5f5f5;
+            background: var(--bg);
             margin: 0;
-            font-family: sans-serif;
-            color: #333;
+            font-family: var(--font-sans);
+            color: var(--text-dark);
+        }
+
+        /*================ FRANJA SUPERIOR ================*/
+        .top-strip {
+            width: 100%;
+            height: 8px;
+            background: var(--top-strip);
         }
 
         /*================ NAVBAR ================*/
         .navbar {
             width: 100%;
-            background: #ff5722;
-            color: white;
+            background: var(--navbar-bg);
+            color: var(--text-dark);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -28,58 +51,74 @@
             position: sticky;
             top: 0;
             z-index: 999;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
             box-sizing: border-box;
         }
 
         .logo {
-            font-size: 32px;
+            font-family: var(--font-serif);
+            font-size: 26px;
             font-weight: bold;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .logo span {
-            color: white;
+            color: var(--accent);
         }
 
         .menu {
             display: flex;
-            gap: 25px;
+            gap: 28px;
             align-items: center;
         }
 
         .menu a {
             text-decoration: none;
-            color: white;
-            font-weight: bold;
-            transition: .3s;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 15px;
+            transition: .25s;
         }
 
         .menu a:hover {
-            color: #ffe082;
+            color: var(--accent);
         }
 
         /*================ CONTENIDO ACERCA DE =================*/
         .container {
             max-width: 1000px;
-            margin: 50px auto;
+            margin: 55px auto;
             padding: 0 20px;
         }
 
         .seccion-acerca {
             background: white;
-            padding: 40px;
-            border-radius: 18px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            padding: 45px;
+            border-radius: 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .etiqueta {
+            display: block;
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
         }
 
         .titulo-seccion {
+            font-family: var(--font-serif);
             font-size: 32px;
-            color: #ff5722;
-            margin-bottom: 25px;
-            border-bottom: 3px solid #ff5722;
-            padding-bottom: 10px;
+            color: var(--text-dark);
+            margin-bottom: 28px;
+            padding-bottom: 14px;
+            border-bottom: 3px solid var(--accent);
             display: inline-block;
-            margin-top: 0;
         }
 
         .acerca-grid {
@@ -96,17 +135,21 @@
             margin-bottom: 20px;
         }
 
+        .acerca-texto strong {
+            color: var(--text-dark);
+        }
+
         .acerca-imagen img {
             width: 100%;
             height: 350px;
             object-fit: cover;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
 
         /*================ FOOTER =================*/
         footer {
-            background: #222;
+            background: var(--top-strip);
             color: white;
             padding: 60px 8%;
             margin-top: 80px;
@@ -120,36 +163,44 @@
 
         footer h3 {
             margin-bottom: 18px;
+            font-family: var(--font-serif);
         }
 
         footer a {
             display: block;
-            color: #ddd;
+            color: #dcdcd5;
             text-decoration: none;
             margin: 10px 0;
         }
 
         footer a:hover {
-            color: #ff5722;
+            color: var(--accent);
         }
 
         .copy {
             text-align: center;
             margin-top: 40px;
-            border-top: 1px solid #444;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
             padding-top: 20px;
-            color: #bbb;
+            color: #b7b7ae;
+            font-size: 14px;
         }
 
         @media(max-width: 768px) {
             .navbar {
                 flex-direction: column;
-                gap: 20px;
+                gap: 16px;
+                padding: 16px 6%;
             }
 
             .menu {
                 flex-wrap: wrap;
                 justify-content: center;
+                gap: 16px;
+            }
+
+            .seccion-acerca {
+                padding: 28px;
             }
 
             .acerca-grid {
@@ -162,15 +213,16 @@
 
 <body>
 
+    <div class="top-strip"></div>
+
     <nav class="navbar">
         <div class="logo">
-            🍔 Food<span>Hub</span>
+            🌱 Gourmet<span>Roots</span>
         </div>
         <div class="menu">
             <a href="/">Inicio</a>
             
             <th:block th:if="${usuario != null}">
-                <a href="/pedidos">Mis pedidos</a>
                 <a href="/carrito">🛒 Mi carrito</a>
                 <a href="/logout">Cerrar sesión</a>
             </th:block>
@@ -179,6 +231,7 @@
 
     <div class="container">
         <section class="seccion-acerca">
+            <span class="etiqueta">Nuestra historia</span>
             <h2 class="titulo-seccion">ℹ️ Acerca de GourmetRoots</h2>
             <div class="acerca-grid">
                 <div class="acerca-texto">
@@ -192,28 +245,98 @@
         </section>
     </div>
 
-    <footer>
-        <div class="footer">
-            <div>
-                <h3>GourmetRoots</h3>
-                <p>La mejor plataforma para descubrir restaurantes y ordenar comida.</p>
-            </div>
-            <div>
-                <h3>Enlaces</h3>
-                <a href="/">Inicio</a>
-            </div>
-            <div>
-                <h3>Cuenta</h3>
-                <th:block th:if="${usuario != null}">
-                    <a href="/pedidos">Mis pedidos</a>
-                    <a href="/carrito">Mi carrito</a>
-                </th:block>
-            </div>
+   <!--
+  ============================================================
+  PIE DE PÁGINA REUTILIZABLE - GourmetRoots
+  ============================================================
+  Cómo usarlo:
+  1) Copia TODO este bloque (el <style> y el <footer>) y pégalo
+     justo antes de cerrar </body> en cualquier página.
+  2) Si la página ya usa Thymeleaf, deja el th:if como está para
+     que "Mis pedidos" y "Mi carrito" solo aparezcan si hay sesión.
+     Si esa página no maneja la variable ${usuario} o
+     ${session.usuario}, borra ese bloque th:block o ajusta la
+     condición a la variable que uses en esa vista.
+  3) Los estilos usan nombres de clase con prefijo "gr-" para no
+     chocar con clases que ya tengas (footer, .footer, etc.).
+     Si en otra página ya tienes una clase "footer" con otro
+     estilo, aquí no se pisan porque usamos ".gr-footer".
+  ============================================================
+-->
+
+<style>
+    .gr-footer {
+        background: #1b2b23;
+        color: white;
+        padding: 60px 8%;
+        margin-top: 80px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .gr-footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 35px;
+        max-width: 1300px;
+        margin: 0 auto;
+    }
+
+    .gr-footer-grid h3 {
+        margin: 0 0 18px 0;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-size: 19px;
+        color: white;
+    }
+
+    .gr-footer-grid p {
+        color: #cfcfc7;
+        font-size: 14.5px;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .gr-footer-grid a {
+        display: block;
+        color: #dcdcd5;
+        text-decoration: none;
+        margin: 10px 0;
+        font-size: 14.5px;
+        transition: .25s;
+    }
+
+    .gr-footer-grid a:hover {
+        color: #e8622c;
+    }
+
+    .gr-footer-copy {
+        text-align: center;
+        margin-top: 40px;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        padding-top: 20px;
+        color: #b7b7ae;
+        font-size: 14px;
+    }
+</style>
+
+<footer class="gr-footer">
+    <div class="gr-footer-grid">
+        <div>
+            <h3>GourmetRoots</h3>
+            <p>La mejor plataforma para descubrir restaurantes y ordenar comida.</p>
         </div>
-        <div class="copy">
-            © 2026 GourmetRoots | Todos los derechos reservados.
+        <div>
+            <h3>Enlaces</h3>
+            <a href="/">Inicio</a>
+            <a href="/restaurantes">Restaurantes</a>
+            <a href="/acerca">Acerca de</a>
+            <a href="/contacto">Contacto</a>
         </div>
-    </footer>
+        
+    </div>
+    <div class="gr-footer-copy">
+        © 2026 GourmetRoots | Todos los derechos reservados.
+    </div>
+</footer>
 
 </body>
 </html>

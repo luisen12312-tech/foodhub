@@ -9,13 +9,43 @@
     <link rel="stylesheet" th:href="@{/css/responsive.css}">
 
     <style>
+        :root {
+            --bg: #faf5ec;
+            --navbar-bg: #faf5ec;
+            --top-strip: #1b2b23;
+            --text-dark: #22261f;
+            --text-muted: #6b6b63;
+            --accent: #e8622c;
+            --accent-dark: #d1531f;
+            --card-bg: #ffffff;
+            --eliminar-bg: #fde3e3;
+            --eliminar-fg: #dc3545;
+            --font-serif: Georgia, 'Times New Roman', Times, serif;
+            --font-sans: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text-dark);
+            font-family: var(--font-sans);
+        }
+
+        /*======================
+          FRANJA SUPERIOR
+        =======================*/
+        .top-strip {
+            width: 100%;
+            height: 8px;
+            background: var(--top-strip);
+        }
+
         /*======================
             BARRA DE NAVEGACIÓN
         =======================*/
         .navbar {
             width: 100%;
-            background: #ff5722;
-            color: white;
+            background: var(--navbar-bg);
+            color: var(--text-dark);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -23,36 +53,264 @@
             position: sticky;
             top: 0;
             z-index: 999;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
             box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: var(--font-sans);
         }
 
         .logo {
-            font-size: 32px;
+            font-family: var(--font-serif);
+            font-size: 26px;
             font-weight: bold;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .logo span {
-            color: white;
+            color: var(--accent);
         }
 
         .menu {
             display: flex;
-            gap: 25px;
+            gap: 28px;
             align-items: center;
         }
 
         .menu a {
             text-decoration: none;
-            color: white;
-            font-weight: bold;
-            transition: .3s;
-            font-family: Arial, Helvetica, sans-serif;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 15px;
+            transition: .25s;
+            font-family: var(--font-sans);
         }
 
         .menu a:hover {
-            color: #ffe082;
+            color: var(--accent);
+        }
+
+        /*======================
+          BOTÓN GENÉRICO (reutilizable)
+        =======================*/
+        .boton {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 999px;
+            font-weight: bold;
+            transition: .25s;
+            box-shadow: 0 4px 12px rgba(232, 98, 44, .25);
+        }
+
+        .boton:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        .menu a.boton {
+            padding: 8px 18px;
+            font-size: 14px;
+            color: white;
+        }
+
+        .menu a.boton:hover {
+            color: white;
+        }
+
+        /*======================
+          ENCABEZADO DE SECCIÓN
+        =======================*/
+        .contenedor {
+            width: 90%;
+            max-width: 1300px;
+            margin: 45px auto;
+        }
+
+        .encabezado-seccion {
+            margin-bottom: 30px;
+        }
+
+        .etiqueta {
+            display: block;
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .titulo-principal {
+            font-family: var(--font-serif);
+            font-size: 34px;
+            color: var(--text-dark);
+        }
+
+        /*======================
+          CONTENIDO / LISTA / RESUMEN
+        =======================*/
+        .contenido {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 28px;
+            align-items: start;
+        }
+
+        .lista {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .item {
+            background: var(--card-bg);
+            border-radius: 18px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, .08);
+            padding: 18px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .item img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 14px;
+            flex-shrink: 0;
+        }
+
+        .item .info {
+            flex: 1;
+        }
+
+        .item .info h2 {
+            font-family: var(--font-serif);
+            font-size: 20px;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .item .info p {
+            font-size: 14.5px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            line-height: 1.5;
+        }
+
+        .item .info p strong {
+            color: var(--text-dark);
+        }
+
+        .cantidad {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin: 12px 0;
+        }
+
+        .cantidad .menos,
+        .cantidad .mas {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            transition: .25s;
+        }
+
+        .cantidad .menos:hover,
+        .cantidad .mas:hover {
+            background: var(--accent-dark);
+        }
+
+        .item .eliminar {
+            display: inline-block;
+            background: var(--eliminar-bg);
+            color: var(--eliminar-fg);
+            text-decoration: none;
+            padding: 9px 18px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-top: 6px;
+            transition: .25s;
+        }
+
+        .item .eliminar:hover {
+            background: var(--eliminar-fg);
+            color: white;
+        }
+
+        /*======================
+          RESUMEN DEL PEDIDO
+        =======================*/
+        .resumen {
+            background: var(--card-bg);
+            border-radius: 18px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, .08);
+            padding: 26px;
+            position: sticky;
+            top: 100px;
+        }
+
+        .resumen h2 {
+            font-family: var(--font-serif);
+            font-size: 22px;
+            color: var(--text-dark);
+            margin-bottom: 14px;
+        }
+
+        .resumen hr {
+            border: none;
+            border-top: 1px solid rgba(0, 0, 0, .08);
+            margin-bottom: 16px;
+        }
+
+        .resumen p {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .resumen p strong {
+            color: var(--text-dark);
+        }
+
+        .resumen .total {
+            font-family: var(--font-serif);
+            font-size: 30px;
+            font-weight: bold;
+            color: var(--accent);
+            margin: 16px 0 22px;
+        }
+
+        .resumen .boton {
+            display: block;
+            text-align: center;
+            width: 100%;
+            padding: 13px 20px;
+            margin-bottom: 14px;
+            box-shadow: 0 6px 16px rgba(232, 98, 44, .3);
+        }
+
+        .resumen .boton.comprar {
+            background: var(--top-strip);
+            box-shadow: 0 6px 16px rgba(27, 43, 35, .3);
+        }
+
+        .resumen .boton.comprar:hover {
+            background: #10201a;
         }
 
         /*======================
@@ -61,19 +319,19 @@
         .vaciar {
             display: block;
             text-align: center;
-            background: #dc3545;
-            color: white !important;
+            background: var(--eliminar-bg);
+            color: var(--eliminar-fg) !important;
             text-decoration: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            margin-bottom: 15px;
+            padding: 13px 20px;
+            border-radius: 999px;
+            margin-bottom: 14px;
             font-weight: bold;
-            transition: background 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 6px rgba(220, 53, 69, 0.15);
+            transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
         }
 
         .vaciar:hover {
-            background: #bd2130;
+            background: var(--eliminar-fg);
+            color: white !important;
             transform: translateY(-2px);
         }
 
@@ -84,19 +342,44 @@
         @media(max-width: 768px) {
             .navbar {
                 flex-direction: column;
-                gap: 20px;
+                gap: 16px;
                 text-align: center;
+                padding: 16px 6%;
             }
 
             .menu {
                 flex-wrap: wrap;
                 justify-content: center;
+                gap: 16px;
+            }
+
+            .titulo-principal {
+                font-size: 26px;
+            }
+
+            .contenido {
+                grid-template-columns: 1fr;
+            }
+
+            .item {
+                flex-direction: column;
+            }
+
+            .item img {
+                width: 100%;
+                height: 180px;
+            }
+
+            .resumen {
+                position: static;
             }
         }
     </style>
 </head>
 
 <body>
+
+   <div class="top-strip"></div>
 
    <nav class="navbar">
     <div class="logo">
@@ -105,19 +388,25 @@
     <div class="menu">
         <th:block th:if="${session.usuario != null and session.usuario.rol.nombre == 'ADMIN'}">
             <a href="/panel">Panel</a>
-            <a href="/mis-pedidos">Mis pedidos</a> <a href="/carrito">🛒 Mi carrito</a>
+            <a href="/mis-pedidos">Mis pedidos</a>
             <a href="/logout">Cerrar sesión</a>
             <a href="/restaurantes">Restaurantes</a>
         </th:block>
         
         <th:block th:if="${session.usuario != null and session.usuario.rol.nombre != 'ADMIN'}">
-            <a href="/mis-pedidos">Mis pedidos</a> <a href="/carrito">🛒 Mi carrito</a>
+            <a href="/" class="boton">Inicio</a>
+            <a href="/mis-pedidos">Mis pedidos</a>
             <a href="/logout">Cerrar sesión</a>
         </th:block>
     </div>
 </nav>
 
     <div class="contenedor">
+
+        <div class="encabezado-seccion">
+            <span class="etiqueta">Tu pedido</span>
+            <h1 class="titulo-principal">Mi carrito</h1>
+        </div>
 
         <div class="contenido">
 
@@ -178,6 +467,8 @@
                 <div class="total">
                     <span th:text="'$ '+${#numbers.formatDecimal(total,1,2)}"></span>
                 </div>
+                 
+            
 
                 <a href="/explorar" class="boton">
                     🍽 Seguir Comprando
@@ -196,6 +487,26 @@
         </div>
 
     </div>
+
+    <footer class="gr-footer">
+    <div class="gr-footer-grid">
+        <div>
+            <h3>GourmetRoots</h3>
+            <p>La mejor plataforma para descubrir restaurantes y ordenar comida.</p>
+        </div>
+        <div>
+            <h3>Enlaces</h3>
+            <a href="/">Inicio</a>
+            <a href="/restaurantes">Restaurantes</a>
+            <a href="/acerca">Acerca de</a>
+            <a href="/contacto">Contacto</a>
+        </div>
+        
+    </div>
+    <div class="gr-footer-copy">
+        © 2026 GourmetRoots | Todos los derechos reservados.
+    </div>
+</footer>
 
 </body>
 
