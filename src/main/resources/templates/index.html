@@ -272,14 +272,54 @@
     <nav class="navbar">
         <div class="logo">🌱 Gourmet<span>Roots</span></div>
         <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()" aria-label="Abrir menú">☰</button>
-        <div class="menu" id="menu">
-            <a href="/">Inicio</a>
-            <a href="/explorar">Restaurantes</a>
-            <a href="/acerca">Acerca</a>
-            <a href="/contacto">Contacto</a>
-            <a href="/login">Iniciar sesión</a>
-            <a href="/registro" class="cta-link">Registrarse</a>
-        </div>
+       <div class="menu" id="menu">
+
+    <a href="/">Inicio</a>
+ <a href="/explorar">Restaurantes</a>
+    <a href="/acerca">Acerca</a>
+    <a href="/contacto">Contacto</a>
+<th:block th:if="${usuario == null}">
+ <a href="/login">
+</a>
+<a href="/registro"
+class="cta-link">Registrarse
+</a>
+</th:block>
+<th:block
+        th:if="${usuario != null and usuario.rol.nombre == 'USUARIO'}">
+<a href="/carrito">🛒 Mi carrito
+</a>
+<a href="/mis-pedidos">
+📦 Mis pedidos
+</a>
+<a href="/logout"
+class="cta-link">
+Cerrar sesión
+</a>
+
+    </th:block>
+
+    <!-- SI ES ADMIN -->
+
+    <th:block
+        th:if="${usuario != null and usuario.rol.nombre == 'ADMIN'}">
+
+        <a href="/panel">
+
+            Panel
+
+        </a>
+
+        <a href="/logout"
+           class="cta-link">
+
+            Cerrar sesión
+
+        </a>
+
+    </th:block>
+
+</div>
     </nav>
 
     <section class="hero">

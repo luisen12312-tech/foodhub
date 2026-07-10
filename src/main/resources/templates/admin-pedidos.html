@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GourmetRoots | Consola de Despacho</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/responsive.css}">
+    <style>
+        :root {
+            --bg: #faf5ec;
+            --navbar-bg: #faf5ec;
+            --top-strip: #1b2b23;
+            --text-dark: #22261f;
+            --text-muted: #6b6b63;
+            --accent: #e8622c;
+            --card-bg: #ffffff;
+            --font-serif: Georgia, 'Times New Roman', Times, serif;
+            --font-sans: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            margin: 0;
+            font-family: var(--font-sans);
+            color: var(--text-dark);
+        }
+
+        .top-strip { width: 100%; height: 8px; background: var(--top-strip); }
+
+        .navbar {
+            width: 100%; background: var(--navbar-bg); display: flex;
+            justify-content: space-between; align-items: center; padding: 18px 8%;
+            position: sticky; top: 0; z-index: 999; border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            box-sizing: border-box;
+        }
+        .logo { font-family: var(--font-serif); font-size: 26px; font-weight: bold; }
+        .logo span { color: var(--accent); }
+        .menu { display: flex; gap: 28px; }
+        .menu a { text-decoration: none; color: var(--text-dark); font-weight: 600; font-size: 15px; }
+        .menu a:hover, .menu a.active { color: var(--accent); }
+
+        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+        
+        .header-console {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 30px; flex-wrap: wrap; gap: 20px;
+        }
+        .header-console h2 { font-family: var(--font-serif); font-size: 32px; margin: 0; }
+        
+        /*========= BOTONES DE FILTRADO TEMPORAL =========*/
+        .filter-group { display: flex; background: #ebdcc5; padding: 6px; border-radius: 30px; gap: 5px; }
+        .filter-btn {
+            background: none; border: none; padding: 10px 24px; font-size: 14px;
+            font-weight: 700; border-radius: 25px; cursor: pointer; color: var(--text-dark);
+            text-decoration: none; transition: 0.25s;
+        }
+        .filter-btn.active { background: var(--top-strip); color: white; }
+
+        /*========= TARJETAS DE PEDIDO ADMIN =========*/
+        .grid-pedidos { display: flex; flex-direction: column; gap: 20px; }
+        .admin-card {
+            background: var(--card-bg); border-radius: 16px; padding: 24px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.04);
+        }
+        .card-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #ebdcc5; padding-bottom: 14px; margin-bottom: 14px; }
+        .order-id { font-family: var(--font-serif); font-size: 18px; font-weight: 700; }
+        .order-user { color: var(--text-muted); font-size: 14px; margin-top: 4px; }
+        
+        .badge-status {
+            padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase;
+        }
+        .status-recibido { background: #dcfce7; color: #166534; }
+        
+        /* DESGLOSE INTERNO */
+        .items-list { background: #fdfbf7; padding: 15px; border-radius: 10px; margin-bottom: 15px; }
+        .item-row { display: flex; justify-content: space-between; font-size: 14.5px; padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.03); }
+        .item-row:last-child { border: none; }
+        .restaurant-tag {
+            background: #eef2f6; color: #1e3a8a; font-size: 11px; font-weight: 700;
+            padding: 2px 8px; border-radius: 4px; text-transform: uppercase; margin-left: 8px;
+        }
+
+        .card-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .price-total { font-family: var(--font-serif); font-size: 22px; font-weight: bold; color: var(--top-strip); }
+        .btn-action {
+            background: var(--accent); color: white; border: none; padding: 10px 20px;
+            border-radius: 8px; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 14px;
+        }
+        .btn-action:hover { background: #d1531f; }
+        
+        .no-data { text-align: center; padding: 60px; background: white; border-radius: 16px; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+
+    <div class="top-strip"></div>
+    <nav class="navbar">
+        <div class="logo">🌱 Gourmet<span>Roots</span></div>
+        <div class="menu">
+            <a href="/panel">Panel</a>
+            <a href="/mis-pedidos" class="active">Despacho Pedidos</a>
+            <a href="/logout">Cerrar sesión</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header-console">
+            <div>
+                <span style="color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 1px; text-transform: uppercase;">Módulo de Operaciones</span>
+                <h2>Consola Global de Pedidos</h2>
+            </div>
+            
+            <div class="filter-group">
+                <a href="/mis-pedidos?filtro=hoy" class="filter-btn" th:classappend="${filtroActivo == 'hoy'} ? 'active' : ''">Hoy</a>
+                <a href="/mis-pedidos?filtro=manana" class="filter-btn" th:classappend="${filtroActivo == 'manana'} ? 'active' : ''">Mañana</a>
+                <a href="/mis-pedidos?filtro=todos" class="filter-btn" th:classappend="${filtroActivo == 'todos'} ? 'active' : ''">Historial Completo</a>
+            </div>
+        </div>
+
+        <div th:if="${#lists.isEmpty(pedidos)}" class="no-data">
+            <p style="font-size: 18px; margin: 0;">No se registran órdenes para el período seleccionado.</p>
+        </div>
+
+        <div class="grid-pedidos" th:if="${!#lists.isEmpty(pedidos)}">
+            <div th:each="pedido : ${pedidos}" class="admin-card">
+                
+                <div class="card-top">
+                    <div>
+                        <div class="order-id">Orden #GR-<span th:text="${pedido.id}">1024</span></div>
+                        <div class="order-user">
+                            👤 Cliente: <strong th:text="${pedido.usuario.nombre}">Enrique</strong> 
+                            | 📅 Hora: <span th:text="${#temporals.format(pedido.fecha, 'dd/MM HH:mm')}">29/06 22:32</span>
+                        </div>
+                    </div>
+                    <span class="badge-status status-recibido" th:text="${pedido.estado}">RECIBIDO</span>
+                </div>
+
+                <div class="items-list">
+                    <div th:each="detalle : ${pedido.detalles}" class="item-row">
+                        <div>
+                            <span th:text="${detalle.cantidad}">1</span>x 
+                            <span th:text="${detalle.producto.nombre}" style="font-weight: 600;">Malteada de Fresa</span>
+                            <span class="restaurant-tag" th:text="${detalle.producto.restaurante.nombre}">Malteadas Cat</span>
+                        </div>
+                        <span th:text="${'$' + #numbers.formatDecimal(detalle.precio * detalle.cantidad, 1, 2)}">$45.00</span>
+                    </div>
+                </div>
+
+                <div class="card-bottom">
+                    <div class="price-total">
+                        Total a Liquidar: <span th:text="${'$' + #numbers.formatDecimal(pedido.total, 1, 2)}">$45.00</span>
+                    </div>
+                    <a th:href="@{/pedido/{id}(id=${pedido.id})}" class="btn-action">
+                        Notificar Cocina y Ver Detalles
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

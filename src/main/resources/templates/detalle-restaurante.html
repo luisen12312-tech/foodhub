@@ -1,688 +1,650 @@
 <!DOCTYPE html>
-<html lang="es"
-xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title
-th:text="${restaurante.nombre} + ' | GourmetRoots'">
-</title>
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,Helvetica,sans-serif;
-}
-
-body{
-background:#f4f4f4;
-color:#333;
-}
-
-/*=========================
-HEADER
-=========================*/
-
-.header{
-
-background:#ff5722;
-color:white;
-box-shadow:0 3px 10px rgba(0,0,0,.2);
-
-}
-
-/*=========================
-NAVBAR
-=========================*/
-
-.navbar{
-
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:18px 8%;
-flex-wrap:wrap;
-
-}
-
-.logo{
-
-font-size:30px;
-font-weight:bold;
-color:white;
-text-decoration:none;
-
-}
-
-.menu{
-
-display:flex;
-gap:25px;
-align-items:center;
-flex-wrap:wrap;
-
-}
-
-.menu a{
-
-text-decoration:none;
-color:white;
-font-weight:bold;
-transition:.3s;
-
-}
-
-.menu a:hover{
-
-color:#ffe082;
-
-}
-
-/*=========================
-HERO
-=========================*/
-
-.hero{
-
-padding:45px 20px;
-text-align:center;
-
-}
-
-.hero h1{
-
-font-size:45px;
-margin-bottom:10px;
-
-}
-
-.hero p{
-
-font-size:19px;
-opacity:.95;
-
-}
-
-/*=========================
-CONTENEDOR
-=========================*/
-
-.contenedor{
-
-width:90%;
-max-width:1300px;
-margin:35px auto;
-
-}
-
-/*=========================
-RESTAURANTE
-=========================*/
-
-.restaurante{
-
-background:white;
-border-radius:20px;
-overflow:hidden;
-box-shadow:0 8px 20px rgba(0,0,0,.15);
-margin-bottom:45px;
-
-}
-
-.restaurante img{
-
-width:100%;
-height:380px;
-object-fit:cover;
-
-}
-
-.info{
-
-padding:30px;
-
-}
-
-.info h2{
-
-margin-bottom:20px;
-color:#ff5722;
-
-}
-
-.info p{
-
-line-height:1.8;
-margin-bottom:12px;
-
-}
-
-/*=========================
-TITULO
-=========================*/
-
-.titulo{
-
-font-size:34px;
-margin-bottom:30px;
-text-align:center;
-
-}
-
-/*=========================
-GRID
-=========================*/
-
-.grid{
-
-display:grid;
-grid-template-columns:
-repeat(auto-fit,minmax(320px,1fr));
-
-gap:30px;
-
-}
-
-/*=========================
-PRODUCTO
-=========================*/
-
-.producto-card{
-
-background:white;
-border-radius:20px;
-overflow:hidden;
-box-shadow:0 6px 20px rgba(0,0,0,.12);
-transition:.35s;
-
-}
-
-.producto-card:hover{
-
-transform:translateY(-8px);
-
-}
-
-.producto-card img{
-
-width:100%;
-height:220px;
-object-fit:cover;
-
-}
-
-.producto-info{
-
-padding:22px;
-
-}
-
-.producto-header{
-
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:15px;
-
-}
-
-.producto-header h3{
-
-font-size:24px;
-
-}
-
-.badge{
-
-background:#fff3cd;
-padding:6px 12px;
-border-radius:20px;
-font-size:13px;
-font-weight:bold;
-color:#856404;
-
-}
-
-.descripcion{
-
-color:#666;
-line-height:1.6;
-min-height:70px;
-
-}
-
-.producto-extra{
-
-display:flex;
-justify-content:space-between;
-margin-top:18px;
-font-size:14px;
-color:#777;
-
-}
-
-.precio{
-
-font-size:30px;
-font-weight:bold;
-color:#28a745;
-margin-top:18px;
-
-}
-
-.acciones{
-
-display:flex;
-gap:12px;
-margin-top:22px;
-
-}
-
-.favorito{
-
-width:55px;
-height:55px;
-
-display:flex;
-justify-content:center;
-align-items:center;
-
-background:#f8f9fa;
-
-border-radius:12px;
-
-font-size:24px;
-
-text-decoration:none;
-
-color:#ff1744;
-
-transition:.3s;
-
-}
-
-.favorito:hover{
-
-background:#ffe5ea;
-
-}
-
-.agregar{
-
-flex:1;
-
-display:flex;
-
-justify-content:center;
-align-items:center;
-
-background:#ff5722;
-color:white;
-
-text-decoration:none;
-
-border-radius:12px;
-
-font-weight:bold;
-
-font-size:17px;
-
-transition:.3s;
-
-}
-
-.agregar:hover{
-
-background:#e64a19;
-
-}
-
-/*=========================
-SIN PRODUCTOS
-=========================*/
-
-.sin-productos{
-
-background:white;
-padding:35px;
-border-radius:18px;
-text-align:center;
-box-shadow:0 5px 15px rgba(0,0,0,.15);
-
-}
-
-/*=========================
-VOLVER
-=========================*/
-
-.volver{
-
-display:inline-block;
-
-margin-top:40px;
-
-background:#6c757d;
-
-color:white;
-
-padding:14px 24px;
-
-text-decoration:none;
-
-border-radius:10px;
-
-transition:.3s;
-
-}
-
-.volver:hover{
-
-background:#565e64;
-
-}
-
-/*=========================
-RESPONSIVE
-=========================*/
-
-@media(max-width:768px){
-
-.navbar{
-
-justify-content:center;
-
-}
-
-.menu{
-
-margin-top:15px;
-justify-content:center;
-
-}
-
-.hero h1{
-
-font-size:33px;
-
-}
-
-.hero p{
-
-font-size:17px;
-
-}
-
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title th:text="${restaurante.nombre} + ' | GourmetRoots'"></title>
+
+    <!-- Tipografía Profesional -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Paleta de colores Premium de las capturas */
+            --dark-navbar: #111827; 
+            --primary: #ff6b35; 
+            --primary-hover: #e0531f;
+            --secondary: #28a745; 
+            --secondary-hover: #1e7e34;
+            
+            --light-bg: #fdfcf9; /* Fondo crema limpio */
+            --text-main: #1f2937;
+            --text-muted: #4b5563;
+            --text-on-dark: #cbd5e1;
+            
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            --border-color: #f1f5f9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-main);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /*==========================
+        HEADER & NAVBAR + HAMBURGER
+        ==========================*/
+        .header {
+            background-color: var(--dark-navbar);
+            color: white;
+            padding-bottom: 60px;
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: 700;
+            z-index: 100;
+        }
+
+        /* Hack de Checkbox para Menú Hamburguesa Puro CSS */
+        .menu-toggle {
+            display: none;
+        }
+
+        .hamburger-icon {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 100;
+            padding: 5px;
+        }
+
+        .hamburger-icon span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            border-radius: 3px;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        .menu {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .menu a {
+            color: var(--text-on-dark);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.2s;
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+
+        .menu a:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /*==========================
+        HERO SECTION
+        ==========================*/
+        .hero {
+            max-width: 1200px;
+            margin: auto;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+
+        .hero p {
+            color: #9ca3af;
+            max-width: 650px;
+            margin: auto;
+            font-size: 16px;
+        }
+
+        /*==========================
+        CONTENEDOR GENERAL
+        ==========================*/
+        .contenedor {
+            max-width: 1200px;
+            margin: -40px auto 60px auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /*==========================
+        FICHA DEL RESTAURANTE
+        ==========================*/
+        .restaurante {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: white;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 50px;
+            border: 1px solid var(--border-color);
+        }
+
+        .imagen-restaurante img {
+            width: 100%;
+            height: 100%;
+            min-height: 340px;
+            object-fit: cover;
+        }
+
+        .info {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .categoria {
+            display: inline-block;
+            background: #fff7ed;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            width: max-content;
+            border: 1px solid rgba(255, 107, 53, 0.15);
+        }
+
+        .info h2 {
+            font-size: 30px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: var(--dark-navbar);
+        }
+
+        .descripcion-restaurante {
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        .datos {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+
+        .dato {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .dato span {
+            font-size: 16px;
+            background: #f3f4f6;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        .dato div {
+            display: flex;
+            gap: 5px;
+        }
+
+        .dato strong {
+            font-size: 14px;
+            color: var(--dark-navbar);
+        }
+
+        .dato p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /*==========================
+        SECCIÓN MENÚ
+        ==========================*/
+        .titulo {
+            font-size: 24px;
+            margin-bottom: 25px;
+            font-weight: 700;
+            color: var(--dark-navbar);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Imagen y tarjeta compacta */
+            gap: 20px;
+        }
+
+        /*==========================
+        TARJETAS DE PRODUCTO
+        ==========================*/
+        .producto-card {
+            background: white;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .producto-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+        }
+
+        .producto-imagen {
+            position: relative;
+            padding-top: 55%; /* Tamaño compacto de imagen */
+            background: #f3f4f6;
+        }
+
+        .producto-imagen img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .producto-info {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .producto-info h3 {
+            font-size: 15px;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: var(--dark-navbar);
+        }
+
+        .descripcion {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 12px;
+            height: 38px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .precio {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark-navbar);
+            margin-top: auto;
+            margin-bottom: 12px;
+        }
+
+        /*==========================
+        BOTONES Y ACCIONES
+        ==========================*/
+        .acciones {
+            width: 100%;
+        }
+
+        .agregar {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            background: var(--secondary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            transition: background 0.2s;
+        }
+
+        .agregar:hover {
+            background: var(--secondary-hover);
+        }
+
+        .deshabilitado {
+            background: #f3f4f6;
+            color: #9ca3af;
+            border: 1px solid #e5e7eb;
+        }
+
+        .botones-finales {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            gap: 15px;
+        }
+
+        .volver {
+            background: white;
+            color: var(--text-main);
+            border: 1px solid #e5e7eb;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 13px;
+            transition: background 0.2s;
+        }
+
+        .volver:hover {
+            background: #f9fafb;
+        }
+
+        .carrito {
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            transition: background 0.2s;
+        }
+
+        .carrito:hover {
+            background: var(--primary-hover);
+        }
+
+        /*==========================
+        ESTADO SIN PRODUCTOS
+        ==========================*/
+        .sin-productos {
+            background: white;
+            padding: 40px 20px;
+            border-radius: var(--radius-md);
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .sin-productos h3 {
+            font-size: 15px;
+            color: var(--text-muted);
+        }
+
+        /*==========================
+        FOOTER (Texto Innecesario Eliminado)
+        ==========================*/
+        .footer {
+            margin-top: 80px;
+            background: var(--dark-navbar);
+            color: white;
+            padding: 40px 20px 30px 20px;
+            border-top: 1px solid #1f2937;
+        }
+
+        .footer-contenido {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .footer-logo {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .footer small {
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        /*==========================
+        MÓVIL / RESPONSIVE (Cambios Críticos)
+        ==========================*/
+        @media (max-width: 900px) {
+            .hero h1 { font-size: 32px; }
+            .restaurante { grid-template-columns: 1fr; }
+            .imagen-restaurante img { min-height: 220px; height: 220px; }
+            .info { padding: 24px; }
+        }
+
+        @media (max-width: 768px) {
+            /* Activación del menú hamburguesa */
+            .hamburger-icon {
+                display: flex;
+            }
+
+            .menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--dark-navbar);
+                padding: 20px;
+                gap: 10px;
+                box-shadow: 0 10px 15px rgba(0,0,0,0.3);
+                z-index: 99;
+                border-top: 1px solid #1f2937;
+            }
+
+            .menu a {
+                width: 100%;
+                text-align: center;
+                padding: 12px;
+            }
+
+            /* Mostrar menú cuando el checkbox invisible esté activo */
+            .menu-toggle:checked ~ .menu {
+                display: flex;
+            }
+
+            /* Animación básica del botón hamburguesa */
+            .menu-toggle:checked ~ .hamburger-icon span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+            .menu-toggle:checked ~ .hamburger-icon span:nth-child(2) {
+                opacity: 0;
+            }
+            .menu-toggle:checked ~ .hamburger-icon span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 26px; }
+            .contenedor { margin-top: -20px; }
+            .grid { grid-template-columns: 1fr; }
+            .botones-finales { flex-direction: column-reverse; }
+            .volver, .carrito { width: 100%; text-align: center; }
+            .dato div { flex-direction: column; gap: 0; }
+        }
+    </style>
 </head>
+
 <body>
 
-<header class="header">
+    <header class="header">
+        <div class="navbar">
+            <a href="/" class="logo">🌱 GourmetRoots</a>
+            
+            <!-- Checkbox de control interno para menú móvil -->
+            <input type="checkbox" id="menu-toggle" class="menu-toggle">
+            
+            <label for="menu-toggle" class="hamburger-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
 
-    <div class="navbar">
+            <div class="menu">
+                <a href="/">Inicio</a>
+                <a href="/explorar">Restaurantes</a>
 
-        <a href="/" class="logo">
-            🌱 GourmetRoots
-        </a>
+                <!-- Funcionalidad Thymeleaf intacta -->
+                <th:block th:if="${usuario == null}">
+                    <a href="/login">Iniciar sesión</a>
+                    <a href="/registro">Registrarse</a>
+                </th:block>
 
-        <div class="menu">
-
-            <a href="/">Inicio</a>
-
-            <a href="/explorar">
-                Restaurantes
-            </a>
-
-            <th:block th:if="${usuario == null}">
-
-                <a href="/login">
-                    Iniciar sesión
-                </a>
-
-                <a href="/registro">
-                    Registrarse
-                </a>
-
-            </th:block>
-
-            <th:block th:if="${usuario != null}">
-
-                <a href="/carrito">
-                    🛒 Mi carrito
-                </a>
-
-                <a href="/logout">
-                    Cerrar sesión
-                </a>
-
-            </th:block>
-
+                <th:block th:if="${usuario != null}">
+                    <a href="/carrito">🛒 Mi carrito</a>
+                    <a href="/logout">Cerrar sesión</a>
+                </th:block>
+            </div>
         </div>
 
-    </div>
-
-    <div class="hero">
-
-        <h1 th:text="${restaurante.nombre}">
-            Nombre Restaurante
-        </h1>
-
-        <p>
-
-            Descubre todos los platillos disponibles y realiza tu pedido
-            desde GourmetRoots.
-
-        </p>
-
-    </div>
-
-</header>
-
-<div class="contenedor">
-
-    <section class="restaurante">
-
-        <img
-        th:src="${restaurante.imagen}"
-        alt="Restaurante">
-
-        <div class="info">
-
-            <h2>
-                Información del restaurante
-            </h2>
-
-            <p>
-
-                <strong>📍 Dirección:</strong>
-
-                <span
-                th:text="${restaurante.direccion}">
-                </span>
-
-            </p>
-
-            <p>
-
-                <strong>📞 Teléfono:</strong>
-
-                <span
-                th:text="${restaurante.telefono}">
-                </span>
-
-            </p>
-
-            <p>
-
-                <strong>📝 Descripción</strong>
-
-            </p>
-
-            <p
-            th:text="${restaurante.descripcion}">
-            </p>
-
+        <div class="hero">
+            <div class="hero-text">
+                <h1 th:text="${restaurante.nombre}"></h1>
+                <p>Ingredientes frescos y la mejor experiencia gastronómica directo a tu mesa.</p>
+            </div>
         </div>
+    </header>
 
-    </section>
+    <div class="contenedor">
 
-    <h2 class="titulo">
+        <!-- INFORMACIÓN DEL RESTAURANTE -->
+        <section class="restaurante">
+            <div class="imagen-restaurante">
+                <img th:src="${restaurante.imagen}" alt="Imagen Restaurante">
+            </div>
+            <div class="info">
+                <span class="categoria">⭐ Destacado</span>
+                <h2 th:text="${restaurante.nombre}">Nombre Restaurante</h2>
+                <p class="descripcion-restaurante" th:text="${restaurante.descripcion}"></p>
 
-        🍽 Menú Disponible
-
-    </h2>
-
-    <div
-    class="grid"
-    th:if="${!#lists.isEmpty(restaurante.productos)}">
-
-        <div
-        class="producto-card"
-        th:each="p : ${restaurante.productos}">
-
-            <img
-            th:src="${p.imagen}"
-            alt="Producto">
-
-            <div class="producto-info">
-
-                <div class="producto-header">
-
-                    <h3
-                    th:text="${p.nombre}">
-                    </h3>
-
-                    <span class="badge">
-
-                        ⭐ Popular
-
-                    </span>
-
+                <div class="datos">
+                    <div class="dato">
+                        <span>📍</span>
+                        <div>
+                            <strong>Dirección:</strong>
+                            <p th:text="${restaurante.direccion}"></p>
+                        </div>
+                    </div>
+                    <div class="dato">
+                        <span>📞</span>
+                        <div>
+                            <strong>Teléfono:</strong>
+                            <p th:text="${restaurante.telefono}"></p>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </section>
 
-                <p
-                class="descripcion"
-                th:text="${p.descripcion}">
-                </p>
+        <!-- MENÚ -->
+        <section class="menu-restaurante">
+            <h2 class="titulo">🍽 Nuestro Menú</h2>
 
-                <div class="producto-extra">
+            <div class="grid" th:if="${!#lists.isEmpty(restaurante.productos)}">
+                <div class="producto-card" th:each="p : ${restaurante.productos}">
+                    <div class="producto-imagen">
+                        <img th:src="${p.imagen}" alt="Producto">
+                        <span class="badge">Popular</span>
+                    </div>
+                    <div class="producto-info">
+                        <h3 th:text="${p.nombre}"></h3>
+                        <p class="descripcion" th:text="${p.descripcion}"></p>
+                        
+                        <div class="precio">
+                            $ <span th:text="${#numbers.formatDecimal(p.precio,1,2)}"></span>
+                        </div>
 
-                    <span>
-
-                        🍽 Disponible
-
-                    </span>
-
-                    <span>
-
-                        🔥 Recién preparado
-
-                    </span>
-
+                        <div class="acciones">
+                            <th:block th:if="${usuario != null}">
+                                <a class="agregar" th:href="@{/carrito/agregar/{id}(id=${p.id})}">🛒 Agregar al carrito</a>
+                            </th:block>
+                            <th:block th:if="${usuario == null}">
+                                <a class="agregar deshabilitado" href="/login">🔒 Inicia sesión</a>
+                            </th:block>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="precio">
-
-                    $
-
-                    <span
-                    th:text="${#numbers.formatDecimal(p.precio,1,2)}">
-                    </span>
-
-                </div>
-
-                <div class="acciones">
-
-                    <a
-                    href="#"
-                    class="favorito">
-
-                        ❤
-
-                    </a>
-
-                    <th:block th:if="${usuario != null}">
-
-                        <a
-                        class="agregar"
-                        th:href="@{/carrito/agregar/{id}(id=${p.id})}">
-
-                            🛒 Agregar al carrito
-
-                        </a>
-
-                    </th:block>
-
-                    <th:block th:if="${usuario == null}">
-
-                        <a
-                        class="agregar"
-                        href="/login">
-
-                            🔒 Inicia sesión para comprar
-
-                        </a>
-
-                    </th:block>
-
-                </div>
-
             </div>
 
+            <div class="sin-productos" th:if="${#lists.isEmpty(restaurante.productos)}">
+                <h3>Este restaurante aún no tiene productos registrados.</h3>
+            </div>
+        </section>
+
+        <!-- BOTONES FINALES -->
+        <div class="botones-finales">
+            <a href="/explorar" class="volver">⬅ Volver</a>
+            <th:block th:if="${usuario != null}">
+                <a href="/carrito" class="carrito">🛒 Ir al carrito</a>
+            </th:block>
         </div>
 
     </div>
 
-    <div
-    class="sin-productos"
-    th:if="${#lists.isEmpty(restaurante.productos)}">
-
-        <h3>
-
-            Este restaurante aún no tiene productos registrados.
-
-        </h3>
-
-    </div>
-
-    <a
-    href="/explorar"
-    class="volver">
-
-        ⬅ Volver a Restaurantes
-
-    </a>
-    </div>
-
-<footer style="
-margin-top:60px;
-background:#222;
-color:white;
-padding:30px;
-text-align:center;">
-
-    <h3 style="margin-bottom:10px;">
-        🌱 GourmetRoots
-    </h3>
-
-    <p>
-        Gracias por visitar nuestros restaurantes.
-    </p>
-
-    <p style="margin-top:10px;font-size:14px;color:#ccc;">
-        © 2026 GourmetRoots · Todos los derechos reservados.
-    </p>
-
-</footer>
+    <!-- FOOTER LIMPIO -->
+    <footer class="footer">
+        <div class="footer-contenido">
+            <div class="footer-logo">🌱 GourmetRoots</div>
+            <small>© 2026 GourmetRoots. Todos los derechos reservados.</small>
+        </div>
+    </footer>
 
 </body>
 </html>

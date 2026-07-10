@@ -1,5 +1,7 @@
 package foodhub;
 
+import java.util.regex.Pattern;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -108,23 +110,97 @@ public String actualizarUsuario(
 }
 
     @PostMapping("/registro")
-    public String guardarUsuario(
-            @RequestParam String nombre,
-            @RequestParam String correo,
-            @RequestParam String password) {
+public String guardarUsuario(
 
-        Usuario usuario = new Usuario();
+        @RequestParam String nombre,
+        @RequestParam String correo,
+        @RequestParam String password,
+        Model model) {
 
-        usuario.setNombre(nombre);
-        usuario.setCorreo(correo);
-        usuario.setPassword(password);
+    nombre = nombre.trim();
+    correo = correo.trim().toLowerCase();
 
-        Rol rol = rolRepository.findByNombre("USUARIO").orElse(null);
+    // Validar nombre
 
-        usuario.setRol(rol);
+    if(nombre.length() < 3 || nombre.length() > 50){
 
-        usuarioRepository.save(usuario);
+        model.addAttribute(
+                "error",
+                "El nombre debe tener entre 3 y 50 caracteres.");
 
-        return "redirect:/login";
+        return "registro";
     }
+
+    if(!Pattern.matches(
+            "^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$",
+            nombre)){
+
+        model.addAttribute(
+                "error",
+                "El nombre solo puede contener letras y espacios.");
+
+        return "registro";
+    }
+
+    // Validar correo
+
+    if(!Pattern.matches(
+            "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$",
+            correo)){
+
+        model.addAttribute(
+                "error",
+                "El correo electrónico no es válido.");
+
+        return "registro";
+    }
+
+    if(usuarioRepository.findByCorreo(correo).isPresent()){
+
+        model.addAttribute(
+                "error",
+                "Ese correo ya se encuentra registrado.");
+
+        return "registro";
+    }
+
+    // Validar contraseña
+
+    if(password.length() < 8){
+
+        model.addAttribute(
+                "error",
+                "La contraseña debe tener mínimo 8 caracteres.");
+
+        return "registro";
+    }
+
+    if(password.length() > 30){
+
+        model.addAttribute(
+                "error",
+                "La contraseña es demasiado larga.");
+
+        return "registro";
+    }
+
+    Usuario usuario = new Usuario();
+
+    usuario.setNombre(nombre);
+
+    usuario.setCorreo(correo);
+
+    usuario.setPassword(password);
+
+    Rol rol =
+            rolRepository
+            .findByNombre("USUARIO")
+            .orElse(null);
+
+    usuario.setRol(rol);
+
+    usuarioRepository.save(usuario);
+
+    return "redirect:/login";
+}
 }
