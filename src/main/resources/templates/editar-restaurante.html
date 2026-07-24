@@ -5,95 +5,119 @@
     <title>Editar Restaurante - GourmetRoots</title>
 
     <style>
-
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial, Helvetica, sans-serif;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
-        body{
-            background:linear-gradient(135deg,#ff6b35,#ff914d);
-            min-height:100vh;
-            display:flex;
-            justify-content:center;
-            align-items:center;
+        body {
+            background: linear-gradient(135deg, #ff6b35, #ff914d);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
 
-        .contenedor{
-            background:white;
-            width:500px;
-            padding:35px;
-            border-radius:20px;
-            box-shadow:0 10px 25px rgba(0,0,0,.2);
+        .contenedor {
+            background: white;
+            width: 100%;
+            max-width: 500px;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .2);
         }
 
-        h1{
-            text-align:center;
-            color:#ff6b35;
-            margin-bottom:25px;
+        h1 {
+            text-align: center;
+            color: #ff6b35;
+            margin-bottom: 25px;
         }
 
-        label{
-            display:block;
-            margin-bottom:5px;
-            font-weight:bold;
-            color:#444;
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #444;
         }
 
-        input, textarea{
-            width:100%;
-            padding:12px;
-            border:1px solid #ddd;
-            border-radius:10px;
-            margin-bottom:18px;
-            font-size:15px;
+        .label-opcional {
+            font-size: 12px;
+            color: #888;
+            font-weight: normal;
         }
 
-        textarea{
-            min-height:120px;
-            resize:vertical;
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 18px;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
         }
 
         input:focus,
-        textarea:focus{
-            outline:none;
-            border-color:#ff6b35;
-            box-shadow:0 0 8px rgba(255,107,53,.3);
+        textarea:focus {
+            outline: none;
+            border-color: #ff6b35;
+            box-shadow: 0 0 8px rgba(255, 107, 53, .3);
         }
 
-        button{
-            width:100%;
-            background:#ff6b35;
-            color:white;
-            border:none;
-            padding:14px;
-            border-radius:10px;
-            font-size:16px;
-            cursor:pointer;
-            transition:.3s;
+        .coordenadas-group {
+            display: flex;
+            gap: 15px;
         }
 
-        button:hover{
-            background:#e85a26;
+        .coordenadas-group .campo {
+            flex: 1;
         }
 
-        .volver{
-            display:block;
-            text-align:center;
-            margin-top:15px;
-            text-decoration:none;
-            color:#555;
-            font-weight:bold;
+        button {
+            width: 100%;
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: .3s;
         }
 
-        .volver:hover{
-            color:#ff6b35;
+        button:hover {
+            background: #e85a26;
         }
 
+        .volver {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .volver:hover {
+            color: #ff6b35;
+        }
+
+        @media(max-width: 600px) {
+            .contenedor {
+                padding: 25px;
+            }
+            .coordenadas-group {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
     </style>
-
 </head>
 <body>
 
@@ -101,35 +125,44 @@
 
     <h1>Editar Restaurante</h1>
 
-    <form action="/restaurantes/actualizar" method="post">
+    <form th:action="@{/restaurantes/actualizar}" th:object="${restaurante}" method="post">
 
-        <input type="hidden"
-               name="id"
-               th:value="${restaurante.id}">
+        <input type="hidden" name="id" th:value="*{id}">
 
         <label>Nombre</label>
-        <input type="text"
-               name="nombre"
-               th:value="${restaurante.nombre}"
-               required>
+        <input type="text" name="nombre" th:value="*{nombre}" required>
 
         <label>Dirección</label>
-        <input type="text"
-               name="direccion"
-               th:value="${restaurante.direccion}"
-               required>
+        <input type="text" name="direccion" th:value="*{direccion}" required>
 
         <label>Teléfono</label>
-        <input type="text"
-               name="telefono"
-               th:value="${restaurante.telefono}"
-               required>
+        <input type="text" name="telefono" th:value="*{telefono}" required>
 
         <label>Descripción</label>
-        <textarea name="descripcion"
-                  required
-                  th:text="${restaurante.descripcion}">
-        </textarea>
+        <textarea name="descripcion" th:text="*{descripcion}" required></textarea>
+
+        <label>URL de la Imagen <span class="label-opcional">(Opcional)</span></label>
+        <input type="text" name="imagen" th:value="*{imagen}">
+
+        <div class="coordenadas-group">
+            <div class="campo">
+                <label>Latitud <span class="label-opcional">(Opcional)</span></label>
+                <input type="number" 
+                       step="any" 
+                       name="latitud" 
+                       th:value="*{latitud}"
+                       placeholder="Ej. 19.4326">
+            </div>
+            
+            <div class="campo">
+                <label>Longitud <span class="label-opcional">(Opcional)</span></label>
+                <input type="number" 
+                       step="any" 
+                       name="longitud" 
+                       th:value="*{longitud}"
+                       placeholder="Ej. -99.1332">
+            </div>
+        </div>
 
         <button type="submit">
             Actualizar Restaurante

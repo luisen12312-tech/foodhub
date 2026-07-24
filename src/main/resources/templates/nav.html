@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+
+    <nav th:fragment="barra-navegacion" class="navbar">
+        <div class="logo">🌱 Gourmet<span>Roots</span></div>
+        
+        <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()" aria-label="Abrir menú">☰</button>
+        
+        <div class="menu" id="menu">
+    <th:block th:if="${session.usuario != null and session.usuario.rol != null and session.usuario.rol.nombre != 'ADMIN'}">
+    <a href="/">Inicio</a>
+    <a href="/mis-pedidos">Mis pedidos</a>
+    <a href="/carrito">Mi carrito</a>
+    <a href="/mapa">Mapa</a>
+    <a href="/cerrar-sesion">Cerrar sesión</a>
+</th:block>
+
+<!-- ESTO SOLO LO VE EL VISITANTE QUE NO HA INICIADO SESIÓN (SESIÓN NULA) -->
+<th:block th:if="${session.usuario == null}">
+    <a href="/">Inicio</a>
+    <a th:href="@{/registro}">Registrar</a>
+    <a th:href="@{/login}">Iniciar Sesión</a>
+</th:block>
+</div>
+
+        <script>
+            function toggleMenu() {
+                const menu = document.getElementById("menu");
+                // Alterna la clase 'active' o 'show' según uses en tus estilos CSS
+                menu.classList.toggle("active"); 
+            }
+        </script>
+    </nav>
+
+</body>
+</html>

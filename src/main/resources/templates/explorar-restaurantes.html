@@ -580,49 +580,7 @@ font-size:15.5px;
 
 <body>
 
-<nav>
-
-<a href="/" class="logo">
-
-🌱 GourmetRoots
-
-</a>
-
-<button class="menu-toggle" id="menuToggle" onclick="toggleMenu()" aria-label="Abrir menú">☰</button>
-
-<div class="menu" id="menu">
-
-<a href="/">Inicio</a>
-
-
-
-<th:block th:if="${usuario == null}">
-
-<a href="/login">
-Iniciar sesión
-</a>
-
-<a href="/registro" class="cta-link">
-Registrarse
-</a>
-
-</th:block>
-
-<th:block th:if="${usuario != null}">
-
-<a href="/carrito">
-🛒 Mi carrito
-</a>
-
-<a href="/logout">
-Cerrar sesión
-</a>
-
-</th:block>
-
-</div>
-
-</nav>
+<div th:replace="~{nav :: barra-navegacion}"></div>
 
 <section class="hero">
 

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de Restaurantes | Gourmet Roots</title>
+    
+    <link rel="stylesheet" th:href="@{/Css/Style.css}">
+    <link rel="stylesheet" th:href="@{/Css/responsive.css}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <style>
+        body {
+            background-color: #fcf8f2;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .map-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .map-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+        .map-title {
+            font-size: 2.2rem;
+            color: #1e293b;
+            margin-bottom: 8px;
+            font-weight: 700;
+            text-align: center;
+        }
+        .map-subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+        #mapa-restaurantes {
+            height: 550px;
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            z-index: 1;
+        }
+        @media (max-width: 768px) {
+            .map-section { margin: 20px auto; }
+            .map-title { font-size: 1.6rem; }
+            .map-subtitle { font-size: 0.9rem; margin-bottom: 15px; }
+            #mapa-restaurantes { height: 400px; }
+        }
+    </style>
+</head>
+<script>
+    // Bloquea el uso de las flechas del historial del navegador tras cerrar sesión
+    (function () {
+        window.history.pushState(null, null, window.location.href);
+        window.onpopstate = function () {
+            // Si el usuario intenta clickear la flecha "Atrás", lo fuerza a avanzar de inmediato
+            window.history.go(1);
+        };
+    })();
+</script>
+<body>
+
+<header style="background: white; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+        <strong style="font-size: 1.5rem; color: #ff6f43;">GourmetRoots</strong>
+            </div>
+            <div th:replace="~{nav :: barra-navegacion}"></div>
+</header>
+
+<main class="map-section">
+    <div class="map-card">
+        <h1 class="map-title">Restaurantes en tu zona</h1>
+        <p class="map-subtitle">Explora los sabores locales guardados en nuestra plataforma</p>
+        
+        <div id="mapa-restaurantes"></div>
+    </div>
+</main>
+
+<div id="datos-restaurantes" style="display: none;">
+    <div class="restaurante-item" 
+         th:each="res : ${restaurantes}"
+         th:data-id="${res.id}"
+         th:data-nombre="${res.nombre}"
+         th:data-descripcion="${res.descripcion}"
+         th:data-latitud="${res.latitud}"
+         th:data-longitud="${res.longitud}">
+    </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Inicializar mapa centrado por defecto
+        const map = L.map('mapa-restaurantes').setView([19.4326, -99.1332], 12);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap'
+        }).addTo(map);
+
+        setTimeout(() => { map.invalidateSize(); }, 400);
+
+        const bounds = [];
+        // Leer los elementos del DOM creados por Thymeleaf
+        const items = document.querySelectorAll('.restaurante-item');
+
+        items.forEach(item => {
+            const lat = parseFloat(item.getAttribute('data-latitud'));
+            const lng = parseFloat(item.getAttribute('data-longitud'));
+            const id = item.getAttribute('data-id');
+            const nombre = item.getAttribute('data-nombre');
+            const descripcion = item.getAttribute('data-descripcion') || 'Sin descripción disponible.';
+
+            // Solo si tienen coordenadas válidas se renderizan
+            if (!isNaN(lat) && !isNaN(lng)) {
+                const marker = L.marker([lat, lng]).addTo(map);
+                
+                const popupContent = `
+                    <div style="font-family: sans-serif; min-width: 180px; padding: 5px;">
+                        <h4 style="margin: 0 0 6px 0; color: #ff6f43; font-size: 14px;">${nombre}</h4>
+                        <p style="margin: 0 0 12px 0; font-size: 12px; color: #475569; line-height: 1.4;">${descripcion}</p>
+                        <a href="/restaurantes/${id}" style="display: block; text-align: center; padding: 6px; background-color: #ff6f43; color: white; text-decoration: none; border-radius: 6px; font-size: 11px; font-weight: bold;">Ver Menú</a>
+                    </div>
+                `;
+                marker.bindPopup(popupContent);
+                bounds.push([lat, lng]);
+            }
+        });
+
+        // Hacer zoom automático para enfocar los restaurantes que existen
+        if (bounds.length > 0) {
+            map.fitBounds(bounds, { padding: [50, 50] });
+        }
+    });
+</script>
+</body>
+</html>

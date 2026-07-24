@@ -1,5 +1,6 @@
 package foodhub;
 
+import jakarta.persistence.CascadeType; // 👈 Agregamos esta importación para la cascada
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,7 +15,7 @@ public class DetallePedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // 👈 Acomodado correctamente aquí
 
     private Integer cantidad;
 
@@ -24,9 +25,9 @@ public class DetallePedido {
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE) // 👈 Agregamos la cascada para el borrado seguro
     @JoinColumn(name = "producto_id")
-    private Producto producto;
+    private Producto producto; // 👈 Acomodado junto a sus anotaciones correspondientes
 
     public DetallePedido() {
     }
@@ -35,16 +36,16 @@ public class DetallePedido {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Integer getCantidad() {
         return cantidad;
     }
 
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Double getPrecio() {
@@ -70,5 +71,4 @@ public class DetallePedido {
     public void setProducto(Producto producto) {
         this.producto = producto;
     }
-
 }

@@ -35,7 +35,6 @@
             color: var(--texto-oscuro);
         }
 
-        /* Elementos de texto general en fuente de lectura, los títulos usan serif */
         p, a, button, span, div {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         }
@@ -85,7 +84,6 @@
         }
 
         .eslogan {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
             font-size: 11px;
             letter-spacing: 1.5px;
             text-transform: uppercase;
@@ -106,7 +104,6 @@
             font-weight: 600;
             font-size: 15px;
             transition: .25s;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         }
 
         .menu a:hover {
@@ -137,7 +134,6 @@
             margin-bottom: 30px;
             font-weight: bold;
             font-size: 15px;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
             transition: .25s;
             box-shadow: 0 6px 16px rgba(255, 87, 34, .35);
         }
@@ -153,7 +149,6 @@
         }
 
         .encabezado-seccion .etiqueta {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
             font-size: 12px;
             font-weight: 700;
             letter-spacing: 1.5px;
@@ -211,7 +206,6 @@
             display: flex;
             flex-direction: column;
             flex: 1;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         }
 
         .card-body h2 {
@@ -267,6 +261,8 @@
             font-weight: 600;
             font-size: 14px;
             transition: .25s;
+            cursor: pointer;
+            border: none;
         }
 
         .editar {
@@ -323,7 +319,6 @@
             width: 90%;
             transform: scale(0.8);
             transition: transform 0.3s ease;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         }
 
         .modal-overlay.active .modal-box {
@@ -358,7 +353,6 @@
             border-radius: 50px;
             cursor: pointer;
             transition: 0.2s;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         }
 
         .btn-modal:hover {
@@ -403,84 +397,62 @@
             }
         }
 
-        
-    .gr-footer {
-        background: #1b2b23;
-        color: white;
-        padding: 60px 8%;
-        margin-top: 80px;
-        font-family: Arial, Helvetica, sans-serif;
-    }
+        .gr-footer {
+            background: #1b2b23;
+            color: white;
+            padding: 60px 8%;
+            margin-top: 80px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
 
-    .gr-footer-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 35px;
-        max-width: 1300px;
-        margin: 0 auto;
-    }
+        .gr-footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 35px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
 
-    .gr-footer-grid h3 {
-        margin: 0 0 18px 0;
-        font-family: Georgia, 'Times New Roman', Times, serif;
-        font-size: 19px;
-        color: white;
-    }
+        .gr-footer-grid h3 {
+            margin: 0 0 18px 0;
+            font-size: 19px;
+            color: white;
+        }
 
-    .gr-footer-grid p {
-        color: #cfcfc7;
-        font-size: 14.5px;
-        line-height: 1.6;
-        margin: 0;
-    }
+        .gr-footer-grid p {
+            color: #cfcfc7;
+            font-size: 14.5px;
+            line-height: 1.6;
+            margin: 0;
+        }
 
-    .gr-footer-grid a {
-        display: block;
-        color: #dcdcd5;
-        text-decoration: none;
-        margin: 10px 0;
-        font-size: 14.5px;
-        transition: .25s;
-    }
+        .gr-footer-grid a {
+            display: block;
+            color: #dcdcd5;
+            text-decoration: none;
+            margin: 10px 0;
+            font-size: 14.5px;
+            transition: .25s;
+        }
 
-    .gr-footer-grid a:hover {
-        color: #e8622c;
-    }
+        .gr-footer-grid a:hover {
+            color: #e8622c;
+        }
 
-    .gr-footer-copy {
-        text-align: center;
-        margin-top: 40px;
-        border-top: 1px solid rgba(255, 255, 255, 0.15);
-        padding-top: 20px;
-        color: #b7b7ae;
-        font-size: 14px;
-    }
-
+        .gr-footer-copy {
+            text-align: center;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            padding-top: 20px;
+            color: #b7b7ae;
+            font-size: 14px;
+        }
     </style>
 </head>
 
 <body>
 
-  <nav class="navbar">
-    <div class="logo-bloque">
-        <div class="logo">
-            🌱 Gourmet<span>Roots</span>
-        </div>
-        <span class="eslogan">Encuentra los mejores restaurantes</span>
-    </div>
-    <div class="menu">
-        <th:block th:if="${session.usuario != null and session.usuario.rol.nombre == 'ADMIN'}">
-            <a href="/panel">Panel</a>
-           
-            <a href="/logout">Cerrar sesión</a>
-        </th:block>
-        
-        <th:block th:if="${session.usuario != null and session.usuario.rol.nombre != 'ADMIN'}">
-            <a href="/mis-pedidos">Mis pedidos</a> <a href="/carrito">🛒 Mi carrito</a>
-            <a href="/logout">Cerrar sesión</a>
-        </th:block>
-    </div>
-</nav>
+    <div th:replace="~{nav :: barra-navegacion}"></div>
 
     <div class="contenedor">
 
@@ -498,7 +470,6 @@
             <div class="card" th:each="p : ${productos}">
 
                 <img th:src="${p.imagen}" alt="Producto">
-
                 <div class="card-body">
 
                     <h2 th:text="${p.nombre}"></h2>
@@ -516,9 +487,9 @@
                         <a class="editar" th:href="@{/productos/editar/{id}(id=${p.id})}">
                             ✏ Editar
                         </a>
-                        <a class="eliminar" th:href="@{/productos/eliminar/{id}(id=${p.id})}">
+                        <button type="button" class="eliminar" th:data-id="${p.id}" th:data-nombre="${p.nombre}" onclick="confirmarEliminacion(this)">
                             🗑 Eliminar
-                        </a>
+                        </button>
                     </div>
 
                 </div>
@@ -538,6 +509,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         function mostrarModal() {
             document.getElementById('customModal').classList.add('active');
@@ -546,27 +518,49 @@
         function redirigir() {
             window.location.href = "/";
         }
+
+        // 🚨 Función añadida para validar la eliminación del producto
+        function confirmarEliminacion(boton) {
+            const productoId = boton.getAttribute('data-id');
+            const productoNombre = boton.getAttribute('data-nombre');
+
+            Swal.fire({
+                title: 'El restaurante tiene solicitudes de los clientes',
+                text: `¿Estás seguro de que deseas continuar? Se eliminará "${productoNombre}" de forma permanente junto con su historial.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ff5722', // Color Naranja GourmetRoots
+                cancelButtonColor: '#6b675f',  // Gris neutro
+                confirmButtonText: 'Continuar',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Si pulsa Continuar, viaja al controlador para procesar la cascada
+                    window.location.href = '/productos/eliminar/' + productoId;
+                }
+            });
+        }
     </script>
 
     <footer class="gr-footer">
-    <div class="gr-footer-grid">
-        <div>
-            <h3>GourmetRoots</h3>
-            <p>La mejor plataforma para descubrir restaurantes y ordenar comida.</p>
+        <div class="gr-footer-grid">
+            <div>
+                <h3>GourmetRoots</h3>
+                <p>La mejor plataforma para descubrir restaurantes y ordenar comida.</p>
+            </div>
+            <div>
+                <h3>Enlaces</h3>
+                <a href="/">Inicio</a>
+                <a href="/restaurantes">Restaurantes</a>
+                <a href="/acerca">Acerca de</a>
+                <a href="/contacto">Contacto</a>
+            </div>
         </div>
-        <div>
-            <h3>Enlaces</h3>
-            <a href="/">Inicio</a>
-            <a href="/restaurantes">Restaurantes</a>
-            <a href="/acerca">Acerca de</a>
-            <a href="/contacto">Contacto</a>
+        <div class="gr-footer-copy">
+            © 2026 GourmetRoots | Todos los derechos reservados.
         </div>
-        
-    </div>
-    <div class="gr-footer-copy">
-        © 2026 GourmetRoots | Todos los derechos reservados.
-    </div>
-</footer>
+    </footer>
 
 </body>
 </html>

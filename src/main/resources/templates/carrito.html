@@ -476,39 +476,34 @@
                 position: static;
             }
         }
+
+        .deshabilitado-limite {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none; /* Evita que haga clic */
+}
     </style>
 </head>
 
+<script>
+    // Bloquea el uso de las flechas del historial del navegador tras cerrar sesión
+    (function () {
+        window.history.pushState(null, null, window.location.href);
+        window.onpopstate = function () {
+            // Si el usuario intenta clickear la flecha "Atrás", lo fuerza a avanzar de inmediato
+            window.history.go(1);
+        };
+    })();
+</script>
 <body>
 
-    <nav class="navbar">
-        <a href="/" class="logo">🌱 GourmetRoots</a>
-        
-        <input type="checkbox" id="menu-toggle" class="menu-toggle">
-        
-        <label for="menu-toggle" class="hamburger-icon">
-            <span></span>
-            <span></span>
-            <span></span>
-        </label>
-
-        <div class="menu">
-            <th:block th:if="${session.usuario != null and session.usuario.rol.nombre == 'ADMIN'}">
-                <a href="/panel">Panel</a>
-                <a href="/mis-pedidos">Mis pedidos</a>
-                <a href="/restaurantes">Restaurantes</a>
-                <a href="/logout">Cerrar sesión</a>
-            </th:block>
-            
-            <th:block th:if="${session.usuario != null and session.usuario.rol.nombre != 'ADMIN'}">
-                <a href="/" class="boton-nav">Inicio</a>
-                <a href="/mis-pedidos">Mis pedidos</a>
-                <a href="/logout">Cerrar sesión</a>
-            </th:block>
-        </div>
-    </nav>
+    <div th:replace="~{nav :: barra-navegacion}"></div>
 
     <div class="contenedor">
+        <div th:if="${error}" class="alerta-carrito-error" style="background-color: #ffebeb; border-left: 5px solid #e53935; color: #c62828; padding: 15px; margin-bottom: 20px; border-radius: 4px; font-weight: bold; display: flex; align-items: center; gap: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    <span>⚠️</span>
+    <span th:text="${error}">Mensaje de error</span>
+</div>
 
         <div class="encabezado-seccion">
             <span class="etiqueta">Tu pedido</span>
@@ -530,11 +525,17 @@
 
                         <p class="descripcion-corta" th:text="${item.producto.descripcion}"></p>
 
-                        <div class="cantidad">
-                            <a class="menos" th:href="@{/carrito/disminuir/{id}(id=${item.id})}">-</a>
-                            <span class="num-cant" th:text="${item.cantidad}"></span>
-                            <a class="mas" th:href="@{/carrito/aumentar/{id}(id=${item.id})}">+</a>
-                        </div>
+<div class="cantidad">
+    <a class="menos" 
+       th:classappend="${item.cantidad <= 1} ? 'deshabilitado-limite' : ''"
+       th:href="${item.cantidad <= 1} ? '#' : @{/carrito/disminuir/{id}(id=${item.id})}">-</a>
+    
+    <span class="num-cant" th:text="${item.cantidad}"></span>
+    
+    <a class="mas" 
+       th:classappend="${item.cantidad >= 10} ? 'deshabilitado-limite' : ''"
+       th:href="${item.cantidad >= 10} ? '#' : @{/carrito/aumentar/{id}(id=${item.id})}">+</a>
+</div>
 
                         <div class="precios-detalles">
                             <span>Unitario: <strong th:text="'$ '+${#numbers.formatDecimal(item.producto.precio,1,2)}"></strong></span>

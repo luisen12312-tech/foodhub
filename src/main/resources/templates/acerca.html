@@ -210,24 +210,22 @@
         }
     </style>
 </head>
-
+<script>
+    // Bloquea el uso de las flechas del historial del navegador tras cerrar sesión
+    (function () {
+        window.history.pushState(null, null, window.location.href);
+        window.onpopstate = function () {
+            // Si el usuario intenta clickear la flecha "Atrás", lo fuerza a avanzar de inmediato
+            window.history.go(1);
+        };
+    })();
+</script>
 <body>
+
 
     <div class="top-strip"></div>
 
-    <nav class="navbar">
-        <div class="logo">
-            🌱 Gourmet<span>Roots</span>
-        </div>
-        <div class="menu">
-            <a href="/">Inicio</a>
-            
-            <th:block th:if="${usuario != null}">
-                <a href="/carrito">🛒 Mi carrito</a>
-                <a href="/logout">Cerrar sesión</a>
-            </th:block>
-        </div>
-    </nav>
+   <div th:replace="~{nav :: barra-navegacion}"></div>
 
     <div class="container">
         <section class="seccion-acerca">

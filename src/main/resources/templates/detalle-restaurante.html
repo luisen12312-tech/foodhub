@@ -594,11 +594,11 @@
         </section>
 
         <!-- MENÚ -->
-        <section class="menu-restaurante">
+       <section class="menu-restaurante">
             <h2 class="titulo">🍽 Nuestro Menú</h2>
 
-            <div class="grid" th:if="${!#lists.isEmpty(restaurante.productos)}">
-                <div class="producto-card" th:each="p : ${restaurante.productos}">
+            <div class="grid" th:if="${!#lists.isEmpty(productos)}">
+                <div class="producto-card" th:each="p : ${productos}">
                     <div class="producto-imagen">
                         <img th:src="${p.imagen}" alt="Producto">
                         <span class="badge">Popular</span>
@@ -623,7 +623,7 @@
                 </div>
             </div>
 
-            <div class="sin-productos" th:if="${#lists.isEmpty(restaurante.productos)}">
+            <div class="sin-productos" th:if="${#lists.isEmpty(productos)}">
                 <h3>Este restaurante aún no tiene productos registrados.</h3>
             </div>
         </section>

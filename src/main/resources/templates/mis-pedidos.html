@@ -39,37 +39,59 @@
             background: var(--top-strip);
         }
 
-        /*================ NAVBAR ================*/
+        /*================ ESTILOS DEL NAVBAR RESTAURADOS ================*/
         .navbar {
-            width: 100%;
-            background: var(--navbar-bg);
-            color: var(--text-dark);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 18px 8%;
-            position: sticky;
-            top: 0;
-            z-index: 999;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-            box-sizing: border-box;
+            padding: 20px 8%;
+            background-color: var(--navbar-bg);
+            border-bottom: 1px solid #e1dbcf;
         }
-
         .logo {
-            font-family: var(--font-serif);
-            font-size: 26px;
-            font-weight: bold;
-            color: var(--text-dark);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-family: var(--font-serif);
+            font-size: 24px;
+            font-weight: 700;
         }
-
-        .logo span { color: var(--accent); }
-
-        .menu { display: flex; gap: 28px; align-items: center; }
-        .menu a { text-decoration: none; color: var(--text-dark); font-weight: 600; font-size: 15px; transition: .25s; }
-        .menu a:hover { color: var(--accent); }
+        .logo img {
+            height: 30px;
+            width: auto;
+        }
+        .menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+        .menu li {
+            margin: 0;
+        }
+        .menu a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 15px;
+            transition: color 0.25s ease;
+        }
+        .menu a:hover {
+            color: var(--accent);
+        }
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-dark);
+            padding: 5px;
+        }
 
         /*================ CONTENIDO PEDIDOS =================*/
         .container { max-width: 1000px; margin: 50px auto; padding: 0 20px; }
@@ -158,8 +180,8 @@
         .gr-footer-copy { text-align: center; margin-top: 40px; border-top: 1px solid rgba(255, 255, 255, 0.15); padding-top: 20px; color: #b7b7ae; font-size: 14px; }
 
         @media(max-width:768px) {
-            .navbar { flex-direction: column; gap: 16px; padding: 16px 6%; }
-            .menu { flex-wrap: wrap; justify-content: center; gap: 16px; }
+            .menu-toggle { display: block; }
+            .menu { display: none; } /* El colapso responsivo real se controlará vía responsive.css */
             .pedido-card { flex-direction: column; align-items: flex-start; gap: 20px; }
             .info-der { width: 100%; flex-direction: row; justify-content: space-between; align-items: center; }
         }
@@ -170,24 +192,8 @@
 
    <div class="top-strip"></div>
 
-   <nav class="navbar">
-    <div class="logo">
-        🌱 Gourmet<span>Roots</span>
-    </div>
-    <div class="menu">
-        <th:block th:if="${session.usuario != null and session.usuario.rol.nombre == 'ADMIN'}">
-            <a href="/panel">Panel</a>
-            <a href="/mis-pedidos">Mis pedidos</a> <a href="/carrito">🛒 Mi carrito</a>
-            <a href="/logout">Cerrar sesión</a>
-        </th:block>
-        
-        <th:block th:if="${session.usuario != null and session.usuario.rol.nombre != 'ADMIN'}">
-             <a href="/">Inicio</a>
-             <a href="/carrito">🛒 Mi carrito</a>
-             <a href="/logout">Cerrar sesión</a>
-        </th:block>
-    </div>
-   </nav>
+   <!-- Inserción del Fragmento Único -->
+   <div th:replace="~{nav :: barra-navegacion}"></div>
 
     <div class="container">
         <div class="title-section">
@@ -262,7 +268,6 @@
                     <input type="text" id="txtGpsResultado" class="input-field" readonly placeholder="Esperando coordenadas...">
                 </div>
 
-                <!-- Modificado a 'Generación de ticket de pago' -->
                 <button class="btn-next" onclick="finalizarYDescargar()">Generación de ticket de pago</button>
             </div>
         </div>
@@ -311,6 +316,7 @@
         }
 
         function cerrarModal() { document.getElementById('pedidoModal').classList.remove('active'); }
+        
         function irAlPaso(num) {
             document.querySelectorAll('.modal-step').forEach(s => s.classList.remove('active'));
             document.getElementById('step-' + num).classList.add('active');
@@ -381,9 +387,7 @@
 
             restaurantesFacturar.forEach((rest) => {
                 const doc = new jsPDF('p', 'mm', 'a4');
-
-                // 1. Encabezado de la Marca Estilizado
-                doc.setFillColor(27, 43, 35); // #1b2b23
+                doc.setFillColor(27, 43, 35);
                 doc.rect(0, 0, 210, 40, 'F');
                 
                 doc.setTextColor(255, 255, 255);
@@ -395,19 +399,14 @@
                 doc.setFontSize(10);
                 doc.text("SISTEMA DE GESTIÓN GASTRONÓMICA", 18, 32);
 
-                // ================= MEJORA DE DISEÑO ALINEACIÓN PERFECTA =================
-                // Dibujar el rectángulo naranja del folio
-                doc.setFillColor(232, 98, 44); // #e8622c Accent
+                doc.setFillColor(232, 98, 44);
                 doc.rect(140, 13, 52, 14, 'F');
                 
-                // Centrado exacto del Texto dentro de la caja naranja
                 doc.setTextColor(255, 255, 255);
                 doc.setFont("helvetica", "bold");
                 doc.setFontSize(11);
                 doc.text(`TICKET #GR-0${datosFlujo.idPedido}`, 166, 21.5, { align: "center" });
-                // =========================================================================
 
-                // 2. Información del Establecimiento y Despacho
                 doc.setTextColor(34, 38, 31);
                 doc.setFontSize(14);
                 doc.setFont("times", "bold");
@@ -417,7 +416,6 @@
                 doc.setLineWidth(0.5);
                 doc.line(18, 60, 192, 60);
 
-                // 3. Bloque de Datos de Entrega Sanitizados
                 doc.setFont("helvetica", "bold");
                 doc.setFontSize(10);
                 doc.text("DATOS DEL CLIENTE Y ENVÍO:", 18, 70);
@@ -429,7 +427,6 @@
                 const splitDireccion = doc.splitTextToSize(`• Destino de Entrega: ${datosFlujo.direccion}`, 170);
                 doc.text(splitDireccion, 20, 90);
 
-                // 4. Tabla de Contenidos Estilo Menú Profesional
                 let tablaY = 105;
                 doc.setFillColor(242, 238, 230);
                 doc.rect(18, tablaY, 174, 8, 'F');
@@ -447,7 +444,6 @@
                     doc.text(`$${it.pu.toFixed(2)}`, 170, filaY + 7);
                 });
 
-                // Caja de Totales Finales
                 let totalY = tablaY + 8 + (rest.items.length * 10) + 10;
                 doc.setFillColor(27, 43, 35);
                 doc.rect(130, totalY, 62, 12, 'F');
@@ -455,7 +451,6 @@
                 doc.setFont("helvetica", "bold");
                 doc.text(`TOTAL NETO:   $${rest.total.toFixed(2)}`, 135, totalY + 8);
 
-                // Marca de agua / Pie de página legal
                 doc.setFontSize(8);
                 doc.setTextColor(150, 150, 150);
                 doc.text("Este documento digital sirve como comprobante interno de preparación y entrega para el repartidor afiliado.", 18, 280);
@@ -467,6 +462,14 @@
             alert("Procesamiento seguro completado. Sus tickets de pago se han generado de manera independiente.");
             cerrarModal();
         }
+
+        // 🚫 SCRIPT SEGURIDAD ANTIRRETORNO
+        (function () {
+            window.history.pushState(null, null, window.location.href);
+            window.onpopstate = function () {
+                window.history.go(1);
+            };
+        })();
     </script>
 </body>
 </html>

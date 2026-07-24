@@ -224,15 +224,7 @@
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="logo">🌱 Gourmet<span>Roots</span></div>
-        <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()" aria-label="Abrir menú">☰</button>
-        <div class="menu" id="menu">
-            <a href="/">Inicio</a>
-            <a href="/explorar">Restaurantes</a>
-            <a href="/acerca">Acerca</a>
-        </div>
-    </nav>
+   <div th:replace="~{nav :: barra-navegacion}"></div>
 
     <section class="hero-explorar">
         <span class="eyebrow">Catálogo completo</span>
